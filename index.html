@@ -99,10 +99,10 @@
       border-color: var(--line); background: var(--surface);
     }
     .weather-card .eyebrow { color: var(--ash); }
-    .weather-top { position: relative; display: block; }
-    .weather-top > div { min-width: 0; }
-    .city-name { margin-top: 5px; color: var(--paper); font-size: clamp(13px, 1.08vw, 18px); line-height: 1.22; white-space: normal; overflow-wrap: anywhere; }
-    .city-change { position: absolute; top: 0; right: 0; padding: 3px 0; border: 0; border-bottom: 1px solid rgba(145,203,208,.62); background: transparent; color: var(--accent); cursor: pointer; font-size: 10px; white-space: nowrap; }
+    .weather-top { display: grid; gap: 5px; }
+    .weather-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .city-name { color: var(--paper); font-size: clamp(13px, 1.08vw, 18px); line-height: 1.22; white-space: normal; overflow-wrap: anywhere; }
+    .city-change { flex: 0 0 auto; padding: 3px 0; border: 0; border-bottom: 1px solid rgba(145,203,208,.62); background: transparent; color: var(--accent); cursor: pointer; font-size: 10px; white-space: nowrap; }
     .city-change:hover { color: var(--paper); border-color: var(--paper); }
     .weather-now { display: flex; align-items: center; gap: 15px; }
     .weather-now > div:last-child { min-width: 0; }
@@ -251,7 +251,7 @@
       </section>
 
       <section class="card weather-card" aria-label="Clima y pronóstico local">
-        <div class="weather-top"><div><div class="eyebrow">Clima local</div><div class="city-name" id="cityName">Buenos Aires</div></div><button class="city-change" id="cityButton" type="button">Cambiar ubicación</button></div>
+        <div class="weather-top"><div class="weather-heading"><div class="eyebrow">Clima local</div><button class="city-change" id="cityButton" type="button">Cambiar ubicación</button></div><div class="city-name" id="cityName">Buenos Aires</div></div>
         <div class="weather-now"><div class="weather-icon" id="weatherIcon" aria-hidden="true"><svg class="weather-symbol" viewBox="0 0 64 64" focusable="false"><g fill="none" stroke="#F2B84B" stroke-width="2" stroke-linecap="round"><path d="M24 7v4m0 20v4m17-14h-4M11 21H7m29-11-3 3m-18 18-3 3m24 0-3-3M15 12l-3-3"/></g><circle cx="24" cy="21" r="9" fill="#FFD166" stroke="#FFF0B5" stroke-width="1.5"/><path d="M18.5 45h29c7 0 11.5-4.1 11.5-9.8 0-5.2-4.1-9.1-10-9.4-2-8.1-8.3-13.3-16-13.3-8.1 0-14.2 5.4-15.7 12.8-5.9.2-9.8 4-9.8 9.2 0 6.4 4.6 10.5 11 10.5Z" fill="#A4C4D4" stroke="#F1F0EC" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><div class="temperature" id="temperature">--°</div><div class="weather-desc" id="weatherDescription">Buscando el pronóstico…</div></div></div>
         <div class="weather-meta"><span id="feelsLike">Sensación --°</span><span id="wind">Viento -- km/h</span><span id="rainChance">Lluvia --%</span></div>
         <div class="forecast" id="forecast" aria-label="Pronóstico de cinco días"></div>
