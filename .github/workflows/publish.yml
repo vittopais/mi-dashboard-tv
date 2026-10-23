@@ -1,0 +1,38 @@
+name: Publicar panel y actualizar noticias
+
+on:
+  push:
+    branches: [main, master]
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Descargar el sitio
+        uses: actions/checkout@v4
+      - name: Obtener titulares actuales
+        run: python3 scripts/update-news.py
+      - name: Preparar GitHub Pages
+        uses: actions/configure-pages@v6
+      - name: Preparar los archivos del sitio
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: .
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v5

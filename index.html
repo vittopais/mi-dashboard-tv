@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Tu panel personal con hora, clima local, pronóstico de lluvia por zonas, agenda y noticias del día.">
+  <title>Mi casa · Panel diario</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101827;
+      --panel: rgba(24, 36, 55, .94);
+      --panel-soft: rgba(39, 54, 77, .78);
+      --line: rgba(190, 209, 235, .13);
+      --text: #f5f7fb;
+      --muted: #9eafc8;
+      --cyan: #84d5d6;
+      --gold: #f4c477;
+      --danger: #ff9a9a;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; }
+    body {
+      overflow: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 7% 3%, rgba(57, 123, 144, .2), transparent 34%),
+        radial-gradient(ellipse at 93% 87%, rgba(191, 126, 56, .12), transparent 30%),
+        var(--bg);
+      font-family: "Aptos", "Segoe UI", Roboto, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    button:focus-visible, input:focus-visible, a:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 3px;
+    }
+    button { color: inherit; }
+    .screen {
+      width: 100vw; height: 100vh; max-width: 2200px; margin: auto;
+      padding: clamp(16px, 1.65vw, 30px) clamp(20px, 3.2vw, 62px) clamp(10px, 1.2vw, 20px);
+      display: grid; grid-template-rows: auto minmax(228px, 29vh) auto minmax(0, 1fr) auto;
+      gap: clamp(10px, 1.1vw, 20px);
+    }
+    header { display: flex; justify-content: space-between; align-items: center; min-height: 46px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 15px; color: #14273a; font-weight: 800; font-size: 22px; background: linear-gradient(145deg, #8ce0dd, #74afcf); }
+    .brand-title { font-size: 15px; font-weight: 750; letter-spacing: .11em; text-transform: uppercase; }
+    .brand-caption { margin-top: 3px; color: var(--muted); font-size: 12px; letter-spacing: .03em; }
+    .top-actions { display: flex; gap: 9px; align-items: center; }
+    .soft-button, .icon-button {
+      border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.045);
+      cursor: pointer; transition: background .2s, border-color .2s;
+    }
+    .soft-button { padding: 9px 13px; color: #dce6f4; font-size: 13px; }
+    .soft-button:hover, .icon-button:hover { background: rgba(255,255,255,.1); border-color: rgba(190,209,235,.3); }
+    .hero { min-height: 0; display: grid; grid-template-columns: .83fr 1.22fr .86fr; gap: clamp(10px, 1.1vw, 20px); }
+    .card { min-width: 0; min-height: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); box-shadow: 0 16px 45px rgba(0,0,0,.14); }
+    .eyebrow { color: var(--cyan); font-size: 11px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+    .clock-card { padding: clamp(17px, 2vw, 34px); display: flex; flex-direction: column; justify-content: center; }
+    .clock { margin: 11px 0 5px; font-size: clamp(64px, 7.4vw, 118px); line-height: .95; letter-spacing: -.075em; font-weight: 560; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .date { font-size: clamp(16px, 1.65vw, 25px); color: #dce5f1; text-transform: capitalize; }
+    .greeting { margin-top: 15px; color: var(--muted); font-size: clamp(13px, 1.1vw, 17px); }
+    .weather-card { position: relative; padding: clamp(16px, 1.75vw, 30px); display: flex; flex-direction: column; justify-content: space-between; background: linear-gradient(150deg, rgba(43, 73, 95, .97), rgba(25, 38, 58, .95) 73%); }
+    .weather-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .city-name { margin-top: 5px; color: #e1eaf5; font-size: clamp(15px, 1.4vw, 21px); }
+    .city-change { padding: 3px 0; border: 0; background: transparent; color: var(--cyan); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; font-size: 12px; white-space: nowrap; }
+    .weather-now { display: flex; align-items: center; gap: 14px; }
+    .weather-icon { font-size: clamp(38px, 4.4vw, 68px); line-height: 1; filter: drop-shadow(0 4px 10px rgba(0,0,0,.15)); }
+    .temperature { font-size: clamp(48px, 5vw, 79px); line-height: 1; letter-spacing: -.07em; font-weight: 520; }
+    .weather-desc { margin-top: 5px; color: #d6e2ef; font-size: clamp(12px, 1vw, 15px); }
+    .weather-meta { display: flex; flex-wrap: wrap; gap: 8px 14px; color: var(--muted); font-size: 11px; }
+    .forecast { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding-top: 8px; border-top: 1px solid var(--line); }
+    .forecast-day { text-align: center; color: var(--muted); font-size: 10px; }
+    .forecast-icon { display: block; margin: 3px 0; color: #f3f6fb; font-size: 15px; }
+    .forecast-temps { color: #edf2f9; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .rain-card { padding: clamp(13px, 1.45vw, 22px); display: flex; flex-direction: column; gap: 9px; background: linear-gradient(150deg, rgba(32,53,77,.97), rgba(24,36,55,.96) 73%); }
+    .rain-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 7px; }
+    .rain-title { margin-top: 4px; font-size: clamp(13px, 1.2vw, 17px); font-weight: 700; }
+    .rain-summary { margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .rain-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 5px; }
+    .rain-cell { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 3px; border: 1px solid rgba(190,209,235,.11); border-radius: 11px; background: rgba(255,255,255,.035); text-align: center; }
+    .rain-cell.center { border-color: rgba(132,213,214,.42); background: rgba(132,213,214,.1); }
+    .rain-cell.low { background: rgba(63,139,151,.14); }
+    .rain-cell.medium { background: rgba(193,152,69,.2); }
+    .rain-cell.high { background: rgba(181,92,89,.26); }
+    .rain-zone { max-width: 100%; color: #c1cde0; font-size: clamp(8px, .74vw, 10px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rain-prob { font-size: clamp(14px, 1.45vw, 21px); font-weight: 750; font-variant-numeric: tabular-nums; }
+    .rain-mm { color: #bdc9da; font-size: clamp(8px, .7vw, 10px); }
+    .rain-legend { display: flex; justify-content: space-between; gap: 6px; color: var(--muted); font-size: 9px; }
+    .agenda-bar { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 9px 13px 9px 17px; border: 1px solid var(--line); border-radius: 16px; background: rgba(24,36,55,.88); }
+    .agenda-heading { min-width: 105px; }
+    .agenda-title { font-size: 14px; font-weight: 700; }
+    .agenda-subtitle { margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .agenda-list { min-width: 0; flex: 1; display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+    .agenda-list::-webkit-scrollbar { display: none; }
+    .agenda-chip { max-width: 260px; flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 11px; background: var(--panel-soft); color: #e7edf6; font-size: 11px; }
+    .agenda-chip time { color: var(--gold); white-space: nowrap; font-weight: 700; }
+    .agenda-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .delete-item { flex: 0 0 auto; width: 23px; height: 23px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); cursor: pointer; font-size: 17px; line-height: 1; }
+    .delete-item:hover { background: rgba(255,154,154,.1); color: var(--danger); }
+    .agenda-empty { color: var(--muted); font-size: 12px; }
+    .small-action { flex: 0 0 auto; border: 1px solid rgba(132,213,214,.3); border-radius: 10px; padding: 8px 11px; background: rgba(132,213,214,.09); color: var(--cyan); cursor: pointer; font-size: 12px; white-space: nowrap; }
+    .small-action:hover { background: rgba(132,213,214,.16); }
+    .news-board { min-height: 0; display: grid; grid-template-rows: repeat(5, minmax(0, 1fr)); gap: 7px; }
+    .news-row { min-height: 0; display: grid; grid-template-columns: clamp(122px, 13vw, 215px) minmax(0, 1fr); gap: 10px; align-items: stretch; }
+    .news-category { display: flex; flex-direction: column; justify-content: center; padding-left: clamp(9px, 1.4vw, 22px); border-left: 3px solid var(--category-color, var(--cyan)); }
+    .category-name { color: #eff3f9; font-size: clamp(12px, 1.15vw, 17px); font-weight: 730; }
+    .category-note { margin-top: 4px; color: var(--muted); font-size: 10px; }
+    .news-items { min-width: 0; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+    .news-item { min-width: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 10px 13px; border: 1px solid var(--line); border-radius: 14px; background: rgba(24,36,55,.87); color: var(--text); text-decoration: none; overflow: hidden; transition: background .2s, border-color .2s; }
+    .news-item:hover { background: rgba(38,56,81,.98); border-color: rgba(132,213,214,.34); }
+    .news-title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: clamp(11px, 1vw, 15px); line-height: 1.32; }
+    .news-source { margin-top: 5px; color: var(--muted); font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .news-loading { grid-column: 1 / -1; display: flex; align-items: center; padding: 9px 13px; border: 1px solid var(--line); border-radius: 14px; background: rgba(24,36,55,.58); color: var(--muted); font-size: 12px; }
+    footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: rgba(184,199,220,.65); font-size: 9px; }
+    footer a { color: inherit; text-underline-offset: 3px; }
+    .status { position: fixed; z-index: 20; left: 50%; bottom: 22px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; border: 1px solid var(--line); border-radius: 12px; background: #263b55; padding: 11px 16px; color: white; transition: .2s; font-size: 13px; }
+    .status.show { opacity: 1; transform: translate(-50%, 0); }
+    .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 10; align-items: center; justify-content: center; padding: 20px; background: rgba(5,10,18,.78); backdrop-filter: blur(7px); }
+    .modal-backdrop.open { display: flex; }
+    .modal { width: min(520px, 100%); max-height: 92vh; overflow: auto; padding: 25px; border: 1px solid var(--line); border-radius: 22px; background: #1a2940; box-shadow: 0 24px 70px rgba(0,0,0,.4); }
+    .modal h2 { margin: 0 0 7px; font-size: 23px; }
+    .modal p { color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .field { display: grid; gap: 7px; margin-top: 15px; color: #dce6f4; font-size: 12px; }
+    .field input { width: 100%; min-height: 43px; padding: 9px 11px; border: 1px solid rgba(190,209,235,.22); border-radius: 10px; background: #101a2b; color: var(--text); }
+    .modal-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 19px; }
+    .result-list { display: grid; gap: 6px; margin-top: 9px; }
+    .result-button { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,.04); color: var(--text); text-align: left; cursor: pointer; font-size: 12px; }
+    .result-button:hover { background: rgba(132,213,214,.12); }
+    .privacy-note { color: #aebbd0; font-size: 11px !important; }
+    @media (max-height: 760px) and (min-width: 901px) {
+      .screen { padding-top: 11px; padding-bottom: 8px; gap: 8px; grid-template-rows: auto minmax(205px, 27vh) auto minmax(0,1fr) auto; }
+      header { min-height: 38px; }
+      .brand-mark { width: 34px; height: 34px; }
+      .clock-card, .weather-card { padding: 14px; }
+      .clock { font-size: clamp(56px, 6.5vw, 88px); margin: 8px 0 4px; }
+      .weather-icon { font-size: 40px; }
+      .temperature { font-size: 54px; }
+      .news-board { gap: 5px; }
+      .news-item { padding: 6px 9px; }
+      .news-title { font-size: 11px; }
+    }
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+      .screen { width: 100%; height: auto; min-height: 100vh; padding: 18px; display: flex; flex-direction: column; }
+      .hero { display: grid; grid-template-columns: 1fr 1.2fr; }
+      .clock-card, .weather-card { min-height: 245px; }
+      .rain-card { grid-column: 1 / -1; min-height: 230px; }
+      .agenda-bar { flex-wrap: wrap; }
+      .agenda-list { flex-basis: calc(100% - 130px); }
+      .news-board { display: flex; flex-direction: column; }
+      .news-row { grid-template-columns: 120px minmax(0,1fr); min-height: 96px; }
+      .news-items { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .news-item:nth-child(3) { display: none; }
+      footer { flex-wrap: wrap; }
+    }
+    @media (max-width: 580px) {
+      .hero { grid-template-columns: 1fr; }
+      .clock-card { min-height: 190px; }
+      .weather-card { min-height: 265px; }
+      .rain-card { grid-column: auto; min-height: 250px; }
+      .top-actions .soft-button { font-size: 0; padding: 9px 11px; }
+      .top-actions .soft-button::after { content: '⛶'; font-size: 16px; }
+      .agenda-heading { min-width: 96px; }
+      .agenda-list { flex-basis: 100%; order: 3; }
+      .news-row { display: block; min-height: 0; }
+      .news-category { min-height: 33px; margin-bottom: 5px; }
+      .news-items { grid-template-columns: 1fr; }
+      .news-item { min-height: 61px; }
+      .news-item:nth-child(3) { display: flex; }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen">
+    <header>
+      <div class="brand"><div class="brand-mark" aria-hidden="true">⌂</div><div><div class="brand-title">Mi casa</div><div class="brand-caption">Tu día, de un vistazo</div></div></div>
+      <div class="top-actions"><button class="soft-button" id="refreshButton" type="button">↻ Actualizar</button><button class="soft-button" id="fullscreenButton" type="button">⛶ Pantalla completa</button></div>
+    </header>
+
+    <section class="hero" aria-label="Hora, clima y lluvia por zonas">
+      <section class="card clock-card" aria-label="Fecha y hora">
+        <div class="eyebrow" id="greeting">Buen día</div>
+        <div class="clock" id="clock">--:--</div>
+        <div class="date" id="date">Cargando fecha…</div>
+        <div class="greeting">Hora de Argentina · Que tengas un buen día</div>
+      </section>
+
+      <section class="card weather-card" aria-label="Clima y pronóstico local">
+        <div class="weather-top"><div><div class="eyebrow">Clima local</div><div class="city-name" id="cityName">Buenos Aires</div></div><button class="city-change" id="cityButton" type="button">Cambiar ubicación</button></div>
+        <div class="weather-now"><div class="weather-icon" id="weatherIcon" aria-hidden="true">🌤️</div><div><div class="temperature" id="temperature">--°</div><div class="weather-desc" id="weatherDescription">Buscando el pronóstico…</div></div></div>
+        <div class="weather-meta"><span id="feelsLike">Sensación --°</span><span id="wind">Viento -- km/h</span><span id="rainChance">Lluvia --%</span></div>
+        <div class="forecast" id="forecast" aria-label="Pronóstico de cinco días"></div>
+      </section>
+
+      <section class="card rain-card" aria-label="Pronóstico de lluvia por zonas">
+        <div class="rain-heading"><div><div class="eyebrow">Mapa meteorológico</div><div class="rain-title">Lluvia en tu zona</div><div class="rain-summary" id="rainSummary">Próximas 3 horas · Buenos Aires</div></div><span aria-hidden="true">🌧️</span></div>
+        <div class="rain-grid" id="rainGrid" aria-live="polite"></div>
+        <div class="rain-legend"><span>Probabilidad de lluvia</span><span id="rainUpdated">Actualizando…</span></div>
+      </section>
+    </section>
+
+    <section class="agenda-bar" aria-label="Agenda y recordatorios">
+      <div class="agenda-heading"><div class="agenda-title">Agenda</div><div class="agenda-subtitle">Próximos recordatorios</div></div>
+      <div class="agenda-list" id="agendaList" aria-live="polite"></div>
+      <button class="small-action" id="addAgenda" type="button">＋ Agregar</button>
+    </section>
+
+    <section class="news-board" id="newsBoard" aria-label="Noticias del día">
+      <article class="news-row" data-category="argentina" style="--category-color:#84d5d6"><div class="news-category"><div class="category-name">Argentina</div><div class="category-note">Actualidad nacional</div></div><div class="news-items" id="news-argentina"><div class="news-loading">Cargando titulares…</div></div></article>
+      <article class="news-row" data-category="mundo" style="--category-color:#a8b9fb"><div class="news-category"><div class="category-name">Mundo</div><div class="category-note">Lo que pasa afuera</div></div><div class="news-items" id="news-mundo"><div class="news-loading">Cargando titulares…</div></div></article>
+      <article class="news-row" data-category="economia" style="--category-color:#f4c477"><div class="news-category"><div class="category-name">Economía</div><div class="category-note">Mercados y negocios</div></div><div class="news-items" id="news-economia"><div class="news-loading">Cargando titulares…</div></div></article>
+      <article class="news-row" data-category="politica" style="--category-color:#e4a8e8"><div class="news-category"><div class="category-name">Política</div><div class="category-note">Gobierno y sociedad</div></div><div class="news-items" id="news-politica"><div class="news-loading">Cargando titulares…</div></div></article>
+      <article class="news-row" data-category="ciencia" style="--category-color:#8ddb9e"><div class="news-category"><div class="category-name">Ciencia y tecnología</div><div class="category-note">Ideas y descubrimientos</div></div><div class="news-items" id="news-ciencia"><div class="news-loading">Cargando titulares…</div></div></article>
+    </section>
+
+    <footer><span id="updatedAt">Actualización automática de clima y titulares.</span><span>Clima y zonas <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> · Noticias Google News</span></footer>
+  </div>
+
+  <div class="status" id="status" role="status" aria-live="polite"></div>
+
+  <div class="modal-backdrop" id="cityModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cityModalTitle">
+      <h2 id="cityModalTitle">Tu ubicación</h2>
+      <p>Elegí una ciudad o usá la ubicación del navegador para mostrar el clima y el pronóstico por zonas.</p>
+      <label class="field">Buscar ciudad<input id="cityInput" type="text" placeholder="Ej.: Córdoba, Argentina" autocomplete="off"></label>
+      <div class="result-list" id="cityResults"></div>
+      <div class="modal-actions"><button class="soft-button close-modal" type="button">Cancelar</button><button class="soft-button" id="geoButton" type="button">◎ Usar ubicación actual</button><button class="small-action" id="searchCity" type="button">Buscar ciudad</button></div>
+      <p class="privacy-note">Si elegís ubicación actual, las coordenadas se envían a Open-Meteo para consultar el clima y el pronóstico de las zonas cercanas. La ubicación elegida queda guardada solo en este navegador.</p>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="agendaModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="agendaModalTitle">
+      <h2 id="agendaModalTitle">Nuevo recordatorio</h2>
+      <p>Se guarda en este navegador. Si borrás sus datos, se borrará también la agenda.</p>
+      <label class="field">¿Qué tenés que recordar?<input id="agendaText" type="text" maxlength="80" placeholder="Ej.: Sacar turno médico"></label>
+      <label class="field">Fecha<input id="agendaDate" type="date"></label>
+      <label class="field">Hora<input id="agendaTime" type="time"></label>
+      <div class="modal-actions"><button class="soft-button close-modal" type="button">Cancelar</button><button class="small-action" id="saveAgenda" type="button">Guardar</button></div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+      const AR_TZ = 'America/Argentina/Buenos_Aires';
+      const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast';
+      const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
+      const UPDATE_MS = 10 * 60 * 1000;
+      const NEWS_URL = './news.json';
+      const NEWS_CATEGORIES = [
+        { id: 'argentina', label: 'Argentina' },
+        { id: 'mundo', label: 'Mundo' },
+        { id: 'economia', label: 'Economía' },
+        { id: 'politica', label: 'Política' },
+        { id: 'ciencia', label: 'Ciencia y tecnología' }
+      ];
+      const $ = id => document.getElementById(id);
+      const readSaved = (key, fallback) => { try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch (_) { return fallback; } };
+      let place = readSaved('miCasa.place', { name: 'Buenos Aires', admin1: 'Ciudad Autónoma de Buenos Aires', country: 'Argentina', latitude: -34.6037, longitude: -58.3816 });
+      let agenda = readSaved('miCasa.agenda', []);
+      let statusTimer;
+      let wakeLock = null;
+
+      function notice(message) {
+        const el = $('status'); el.textContent = message; el.classList.add('show');
+        clearTimeout(statusTimer); statusTimer = setTimeout(() => el.classList.remove('show'), 2600);
+      }
+      function escapeHtml(value) {
+        return String(value || '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+      }
+      function safeLink(value) {
+        try { const url = new URL(value); return url.protocol === 'https:' ? url.href : '#'; }
+        catch (_) { return '#'; }
+      }
+      function cityLabel(item) {
+        if (item.label) return item.label;
+        return [item.name, item.admin1, item.country].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(', ');
+      }
+      function todayAR() {
+        const parts = new Intl.DateTimeFormat('en-CA', { timeZone: AR_TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+        const p = Object.fromEntries(parts.map(x => [x.type, x.value]));
+        return `${p.year}-${p.month}-${p.day}`;
+      }
+      function tick() {
+        const now = new Date();
+        $('clock').textContent = new Intl.DateTimeFormat('es-AR', { timeZone: AR_TZ, hour: '2-digit', minute: '2-digit', hour12: false }).format(now);
+        $('date').textContent = new Intl.DateTimeFormat('es-AR', { timeZone: AR_TZ, weekday: 'long', day: 'numeric', month: 'long' }).format(now);
+        const hour = Number(new Intl.DateTimeFormat('en', { timeZone: AR_TZ, hour: '2-digit', hour12: false }).format(now));
+        $('greeting').textContent = hour < 12 ? 'Buen día' : hour < 19 ? 'Buenas tardes' : 'Buenas noches';
+      }
+      tick(); setInterval(tick, 15000);
+
+      function weatherInfo(code, isDay = 1) {
+        if (code === 0) return ['Despejado', isDay ? '☀️' : '🌙'];
+        if (code === 1) return ['Mayormente despejado', isDay ? '🌤️' : '🌙'];
+        if (code === 2) return ['Parcialmente nublado', '⛅'];
+        if (code === 3) return ['Nublado', '☁️'];
+        if (code === 45 || code === 48) return ['Niebla', '🌫️'];
+        if ([51, 53, 55, 56, 57].includes(code)) return ['Llovizna', '🌦️'];
+        if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return ['Lluvia', '🌧️'];
+        if ([71, 73, 75, 77, 85, 86].includes(code)) return ['Nieve', '🌨️'];
+        if ([95, 96, 99].includes(code)) return ['Tormenta', '⛈️'];
+        return ['Variable', '🌤️'];
+      }
+      function cacheFresh(key) {
+        const item = readSaved(key, null);
+        return item && Date.now() - item.at < UPDATE_MS ? item.data : null;
+      }
+      function updatePlaceLabel() {
+        $('cityName').textContent = cityLabel(place);
+        $('rainSummary').textContent = 'Próximas 3 horas · ' + cityLabel(place);
+      }
+      async function loadWeather(force = false) {
+        updatePlaceLabel();
+        const cacheKey = 'miCasa.weather.' + Number(place.latitude).toFixed(3) + ',' + Number(place.longitude).toFixed(3);
+        const cached = force ? null : cacheFresh(cacheKey);
+        if (cached) { renderWeather(cached); return; }
+        try {
+          const params = new URLSearchParams({
+            latitude: place.latitude, longitude: place.longitude,
+            current: 'temperature_2m,apparent_temperature,weather_code,wind_speed_10m,is_day',
+            daily: 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max',
+            forecast_days: '5', timezone: 'auto'
+          });
+          const response = await fetch(WEATHER_URL + '?' + params.toString(), { cache: 'no-store' });
+          if (!response.ok) throw new Error('weather');
+          const data = await response.json();
+          localStorage.setItem(cacheKey, JSON.stringify({ at: Date.now(), data }));
+          renderWeather(data);
+        } catch (_) {
+          $('weatherDescription').textContent = 'Sin conexión al pronóstico';
+          $('forecast').innerHTML = '';
+        }
+      }
+      function renderWeather(data) {
+        const c = data.current, daily = data.daily;
+        if (!c || !daily) return;
+        const [description, icon] = weatherInfo(c.weather_code, c.is_day);
+        $('weatherIcon').textContent = icon;
+        $('temperature').textContent = Math.round(c.temperature_2m) + '°';
+        $('weatherDescription').textContent = description;
+        $('feelsLike').textContent = 'Sensación ' + Math.round(c.apparent_temperature) + '°';
+        $('wind').textContent = 'Viento ' + Math.round(c.wind_speed_10m) + ' km/h';
+        const chance = daily.precipitation_probability_max?.[0];
+        $('rainChance').textContent = 'Lluvia ' + (chance == null ? '--' : chance) + '%';
+        $('forecast').innerHTML = daily.time.map((day, i) => {
+          const [desc, dayIcon] = weatherInfo(daily.weather_code[i]);
+          const date = new Date(day + 'T12:00:00');
+          const weekday = i === 0 ? 'Hoy' : new Intl.DateTimeFormat('es-AR', { weekday: 'short', timeZone: AR_TZ }).format(date).replace('.', '');
+          return `<div class="forecast-day" title="${escapeHtml(desc)}">${weekday}<span class="forecast-icon" aria-hidden="true">${dayIcon}</span><span class="forecast-temps">${Math.round(daily.temperature_2m_max[i])}° <span style="color:var(--muted)">${Math.round(daily.temperature_2m_min[i])}°</span></span></div>`;
+        }).join('');
+        setUpdatedTime();
+      }
+      function setUpdatedTime() {
+        $('updatedAt').textContent = 'Clima actualizado ' + new Intl.DateTimeFormat('es-AR', { timeZone: AR_TZ, hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date()) + ' · Noticias aprox. cada 15 minutos';
+      }
+      loadWeather(); setInterval(loadWeather, UPDATE_MS);
+
+      const ZONE_LABELS = ['Noroeste', 'Norte', 'Noreste', 'Oeste', 'Tu zona', 'Este', 'Sudoeste', 'Sur', 'Sudeste'];
+      function zonePoints() {
+        const lat = Number(place.latitude), lon = Number(place.longitude);
+        const dLat = .11;
+        const dLon = .11 / Math.max(.25, Math.cos(lat * Math.PI / 180));
+        const offsets = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,0],[0,1],[1,-1],[1,0],[1,1]];
+        return offsets.map(([dy, dx]) => ({ latitude: lat + dy*dLat, longitude: lon + dx*dLon }));
+      }
+      function renderZoneLoading(message = 'Calculando…') {
+        $('rainGrid').innerHTML = ZONE_LABELS.map((label, i) => `<div class="rain-cell${i === 4 ? ' center' : ''}"><span class="rain-zone">${label}</span><span class="rain-prob">—</span><span class="rain-mm">${message}</span></div>`).join('');
+      }
+      async function loadZoneForecast(force = false) {
+        updatePlaceLabel();
+        const cacheKey = 'miCasa.zones.' + Number(place.latitude).toFixed(3) + ',' + Number(place.longitude).toFixed(3);
+        const cached = force ? null : cacheFresh(cacheKey);
+        if (cached) { renderZoneForecast(cached); return; }
+        try {
+          const points = zonePoints();
+          const params = new URLSearchParams({
+            latitude: points.map(p => p.latitude.toFixed(4)).join(','),
+            longitude: points.map(p => p.longitude.toFixed(4)).join(','),
+            hourly: 'precipitation_probability,precipitation', forecast_hours: '12', timezone: 'auto'
+          });
+          const response = await fetch(WEATHER_URL + '?' + params.toString(), { cache: 'no-store' });
+          if (!response.ok) throw new Error('zones');
+          const data = await response.json();
+          localStorage.setItem(cacheKey, JSON.stringify({ at: Date.now(), data }));
+          renderZoneForecast(data);
+        } catch (_) {
+          renderZoneLoading('Sin conexión');
+          $('rainUpdated').textContent = 'Sin conexión';
+        }
+      }
+      function renderZoneForecast(data) {
+        const forecasts = Array.isArray(data) ? data : [data];
+        const now = new Date();
+        const currentHour = new Intl.DateTimeFormat('en-CA', { timeZone: AR_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hour12: false }).format(now).replace(', ', 'T');
+        const cells = forecasts.slice(0, 9).map((forecast, i) => {
+          const hours = forecast.hourly || {};
+          let start = Array.isArray(hours.time) ? hours.time.findIndex(t => t >= currentHour) : 0;
+          if (start < 0) start = 0;
+          const probabilities = (hours.precipitation_probability || []).slice(start, start + 3).filter(Number.isFinite);
+          const precip = (hours.precipitation || []).slice(start, start + 3).filter(Number.isFinite).reduce((sum, value) => sum + value, 0);
+          const chance = probabilities.length ? Math.max(...probabilities) : null;
+          const level = chance >= 60 ? 'high' : chance >= 30 ? 'medium' : chance > 0 ? 'low' : '';
+          const center = i === 4 ? ' center' : '';
+          const amount = precip < .1 ? '0 mm' : precip.toFixed(1) + ' mm';
+          return `<div class="rain-cell${center} ${level}" title="${escapeHtml(ZONE_LABELS[i])}: ${chance == null ? 'sin dato' : chance + '%'} de probabilidad, ${amount} previstos en 3 horas"><span class="rain-zone">${escapeHtml(ZONE_LABELS[i])}</span><span class="rain-prob">${chance == null ? '—' : chance + '%'}</span><span class="rain-mm">${amount} / 3 h</span></div>`;
+        }).join('');
+        $('rainGrid').innerHTML = cells;
+        $('rainUpdated').textContent = 'Actualizado ' + new Intl.DateTimeFormat('es-AR', { timeZone: AR_TZ, hour: '2-digit', minute: '2-digit', hour12: false }).format(now);
+      }
+      loadZoneForecast(); setInterval(loadZoneForecast, UPDATE_MS);
+
+      function renderCategory(category, items) {
+        const container = $('news-' + category.id);
+        if (!items || !items.length) { container.innerHTML = '<div class="news-loading">No hay titulares disponibles ahora.</div>'; return; }
+        container.innerHTML = items.slice(0, 3).map(item => {
+          const source = item.author || category.label;
+          const time = item.pubDate ? new Intl.DateTimeFormat('es-AR', { timeZone: AR_TZ, hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(item.pubDate)) : '';
+          return `<a class="news-item" href="${escapeHtml(safeLink(item.link))}" target="_blank" rel="noreferrer"><span class="news-title">${escapeHtml(item.title)}</span><span class="news-source">${escapeHtml(source)}${time ? ' · ' + time : ''}</span></a>`;
+        }).join('');
+      }
+      async function loadNews(force = false) {
+        try {
+          const response = await fetch(NEWS_URL + '?t=' + Date.now(), { cache: 'no-store' });
+          if (!response.ok) throw new Error('news');
+          const data = await response.json();
+          NEWS_CATEGORIES.forEach(category => renderCategory(category, data.categories?.[category.id] || []));
+        } catch (_) {
+          const message = location.protocol === 'file:' ? 'Las noticias se activan al publicar el sitio en Internet.' : 'No se pudieron cargar. Se reintenta automáticamente.';
+          NEWS_CATEGORIES.forEach(category => { $('news-' + category.id).innerHTML = `<div class="news-loading">${message}</div>`; });
+        }
+      }
+      loadNews(); setInterval(loadNews, UPDATE_MS);
+      $('refreshButton').addEventListener('click', () => { loadWeather(true); loadZoneForecast(true); loadNews(true); notice('Actualizando el panel…'); });
+
+      function renderAgenda() {
+        const today = todayAR();
+        agenda = agenda.filter(item => item.date >= today).sort((a, b) => (a.date + (a.time || '23:59')).localeCompare(b.date + (b.time || '23:59')));
+        localStorage.setItem('miCasa.agenda', JSON.stringify(agenda));
+        const visible = agenda.slice(0, 5);
+        if (!visible.length) { $('agendaList').innerHTML = '<span class="agenda-empty">Todavía no agregaste recordatorios.</span>'; return; }
+        $('agendaList').innerHTML = visible.map(item => {
+          const date = new Date(item.date + 'T12:00:00');
+          const day = item.date === today ? 'Hoy' : new Intl.DateTimeFormat('es-AR', { timeZone: AR_TZ, weekday: 'short', day: 'numeric', month: 'short' }).format(date);
+          const time = item.time ? ` · ${item.time}` : ' · Todo el día';
+          return `<div class="agenda-chip" title="${escapeHtml(item.text)}"><time>${escapeHtml(day + time)}</time><span>${escapeHtml(item.text)}</span><button class="delete-item" data-id="${escapeHtml(item.id)}" type="button" aria-label="Eliminar ${escapeHtml(item.text)}">×</button></div>`;
+        }).join('');
+        $('agendaList').querySelectorAll('.delete-item').forEach(button => button.addEventListener('click', () => {
+          agenda = agenda.filter(item => item.id !== button.dataset.id); renderAgenda(); notice('Recordatorio eliminado.');
+        }));
+      }
+      renderAgenda();
+
+      function openModal(id, focusId) {
+        const modal = $(id); modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
+        setTimeout(() => $(focusId)?.focus(), 100);
+      }
+      function closeModal(modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); }
+      document.querySelectorAll('.close-modal').forEach(button => button.addEventListener('click', () => closeModal(button.closest('.modal-backdrop'))));
+      document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.addEventListener('click', event => { if (event.target === backdrop) closeModal(backdrop); }));
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal-backdrop.open').forEach(closeModal); });
+
+      $('cityButton').addEventListener('click', () => {
+        $('cityInput').value = ''; $('cityResults').innerHTML = ''; openModal('cityModal', 'cityInput');
+      });
+      async function searchCity() {
+        const query = $('cityInput').value.trim();
+        if (query.length < 2) { notice('Escribí al menos dos letras.'); return; }
+        $('cityResults').innerHTML = '<div class="news-loading">Buscando…</div>';
+        try {
+          const params = new URLSearchParams({ name: query, count: 6, language: 'es', format: 'json' });
+          const response = await fetch(GEOCODE_URL + '?' + params.toString());
+          if (!response.ok) throw new Error('city');
+          const data = await response.json(), results = data.results || [];
+          if (!results.length) { $('cityResults').innerHTML = '<div class="news-loading">No encontramos la ciudad. Probá agregando el país.</div>'; return; }
+          $('cityResults').innerHTML = results.map((item, index) => `<button class="result-button" type="button" data-index="${index}">${escapeHtml(cityLabel(item))}</button>`).join('');
+          $('cityResults').querySelectorAll('.result-button').forEach(button => button.addEventListener('click', () => {
+            place = results[Number(button.dataset.index)]; localStorage.setItem('miCasa.place', JSON.stringify(place)); closeModal($('cityModal')); loadWeather(); loadZoneForecast(); notice('Ubicación actualizada.');
+          }));
+          $('cityResults').querySelector('.result-button')?.focus();
+        } catch (_) { $('cityResults').innerHTML = '<div class="news-loading">No se pudo buscar. Revisá la conexión.</div>'; }
+      }
+      $('searchCity').addEventListener('click', searchCity);
+      $('cityInput').addEventListener('keydown', event => { if (event.key === 'Enter') searchCity(); });
+      $('geoButton').addEventListener('click', () => {
+        if (!navigator.geolocation) { notice('Este navegador no permite compartir la ubicación. Buscá tu ciudad.'); return; }
+        $('geoButton').textContent = 'Buscando ubicación…';
+        navigator.geolocation.getCurrentPosition(position => {
+          place = { name: 'Mi ubicación', label: 'Mi ubicación', latitude: position.coords.latitude, longitude: position.coords.longitude };
+          localStorage.setItem('miCasa.place', JSON.stringify(place)); closeModal($('cityModal')); loadWeather(); loadZoneForecast(); notice('Ubicación actualizada.'); $('geoButton').textContent = '◎ Usar ubicación actual';
+        }, () => { $('geoButton').textContent = '◎ Usar ubicación actual'; notice('No se autorizó la ubicación. Podés buscar tu ciudad.'); }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 30 * 60 * 1000 });
+      });
+
+      $('addAgenda').addEventListener('click', () => {
+        $('agendaText').value = ''; $('agendaDate').value = todayAR(); $('agendaTime').value = '';
+        openModal('agendaModal', 'agendaText');
+      });
+      $('saveAgenda').addEventListener('click', () => {
+        const text = $('agendaText').value.trim(), date = $('agendaDate').value, time = $('agendaTime').value;
+        if (!text || !date) { notice('Completá el recordatorio y la fecha.'); return; }
+        agenda.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), text, date, time });
+        closeModal($('agendaModal')); renderAgenda(); notice('Recordatorio guardado.');
+      });
+
+      async function holdScreenAwake() {
+        if (!('wakeLock' in navigator) || document.visibilityState !== 'visible') return;
+        try { wakeLock = await navigator.wakeLock.request('screen'); } catch (_) { /* El televisor o navegador puede no permitirlo. */ }
+      }
+      holdScreenAwake();
+      document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') holdScreenAwake(); });
+      $('fullscreenButton').addEventListener('click', async () => {
+        try {
+          if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+          else await document.exitFullscreen();
+        } catch (_) { notice('Usá la opción de pantalla completa del navegador.'); }
+      });
+    })();
+  </script>
+</body>
+</html>
