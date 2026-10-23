@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101827">
-  <meta name="description" content="Tu panel personal con hora, clima local, pronóstico de lluvia por zonas, agenda y noticias del día.">
+  <meta name="description" content="Tu panel personal con hora, clima local, radar de lluvia, agenda y noticias del día.">
   <title>Mi casa · Panel diario</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <style>
     :root {
       color-scheme: dark;
@@ -54,11 +55,11 @@
     }
     .soft-button { padding: 9px 13px; color: #dce6f4; font-size: 13px; }
     .soft-button:hover, .icon-button:hover { background: rgba(255,255,255,.1); border-color: rgba(190,209,235,.3); }
-    .hero { min-height: 0; display: grid; grid-template-columns: .83fr 1.22fr .86fr; gap: clamp(10px, 1.1vw, 20px); }
+    .hero { min-height: 0; display: grid; grid-template-columns: 1fr 1.15fr 1.05fr; gap: clamp(10px, 1.1vw, 20px); }
     .card { min-width: 0; min-height: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); box-shadow: 0 16px 45px rgba(0,0,0,.14); }
     .eyebrow { color: var(--cyan); font-size: 11px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
     .clock-card { padding: clamp(17px, 2vw, 34px); display: flex; flex-direction: column; justify-content: center; }
-    .clock { margin: 11px 0 5px; font-size: clamp(64px, 7.4vw, 118px); line-height: .95; letter-spacing: -.075em; font-weight: 560; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .clock { margin: 11px 0 5px; font-size: clamp(64px, 7.8vw, 126px); line-height: .95; letter-spacing: -.075em; font-weight: 560; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .date { font-size: clamp(16px, 1.65vw, 25px); color: #dce5f1; text-transform: capitalize; }
     .greeting { margin-top: 15px; color: var(--muted); font-size: clamp(13px, 1.1vw, 17px); }
     .weather-card { position: relative; padding: clamp(16px, 1.75vw, 30px); display: flex; flex-direction: column; justify-content: space-between; background: linear-gradient(150deg, rgba(43, 73, 95, .97), rgba(25, 38, 58, .95) 73%); }
@@ -74,20 +75,26 @@
     .forecast-day { text-align: center; color: var(--muted); font-size: 10px; }
     .forecast-icon { display: block; margin: 3px 0; color: #f3f6fb; font-size: 15px; }
     .forecast-temps { color: #edf2f9; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .rain-card { padding: clamp(13px, 1.45vw, 22px); display: flex; flex-direction: column; gap: 9px; background: linear-gradient(150deg, rgba(32,53,77,.97), rgba(24,36,55,.96) 73%); }
-    .rain-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 7px; }
-    .rain-title { margin-top: 4px; font-size: clamp(13px, 1.2vw, 17px); font-weight: 700; }
-    .rain-summary { max-width: 100%; margin-top: 3px; overflow: hidden; color: var(--muted); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
-    .rain-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 4px; }
-    .rain-cell { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: 2px 1px; border: 1px solid rgba(190,209,235,.11); border-radius: 11px; background: rgba(255,255,255,.035); text-align: center; line-height: 1; }
-    .rain-cell.center { border-color: rgba(132,213,214,.42); background: rgba(132,213,214,.1); }
-    .rain-cell.low { background: rgba(63,139,151,.14); }
-    .rain-cell.medium { background: rgba(193,152,69,.2); }
-    .rain-cell.high { background: rgba(181,92,89,.26); }
-    .rain-zone { max-width: 100%; color: #c1cde0; font-size: clamp(8px, .68vw, 9px); line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .rain-prob { font-size: clamp(12px, 1.05vw, 15px); line-height: 1.05; font-weight: 750; font-variant-numeric: tabular-nums; }
-    .rain-mm { color: #bdc9da; font-size: clamp(7px, .62vw, 8px); line-height: 1.05; }
-    .rain-legend { display: flex; justify-content: space-between; gap: 6px; color: var(--muted); font-size: 9px; }
+    .rain-card { padding: clamp(12px, 1.25vw, 20px); display: flex; flex-direction: column; gap: 8px; background: linear-gradient(150deg, rgba(32,53,77,.97), rgba(24,36,55,.96) 73%); }
+    .rain-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .rain-title { margin-top: 3px; font-size: clamp(14px, 1.2vw, 18px); font-weight: 720; }
+    .rain-summary { max-width: 100%; margin-top: 3px; overflow: hidden; color: var(--muted); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+    .radar-live { flex: 0 0 auto; display: flex; align-items: center; gap: 6px; margin-top: 1px; padding: 6px 8px; border: 1px solid rgba(132,213,214,.2); border-radius: 999px; background: rgba(132,213,214,.08); color: #b9e8e6; font-size: 9px; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+    .radar-dot { width: 7px; height: 7px; border-radius: 50%; background: #76e1c0; box-shadow: 0 0 10px rgba(118,225,192,.65); }
+    .radar-map-wrap { position: relative; flex: 1; min-height: 0; overflow: hidden; border: 1px solid rgba(190,209,235,.12); border-radius: 15px; background: #dce2d8; }
+    #radarMap { position: absolute; inset: 0; z-index: 1; background: #dce2d8; }
+    .radar-location { position: absolute; z-index: 2; top: 8px; left: 8px; max-width: calc(100% - 16px); overflow: hidden; padding: 5px 8px; border: 1px solid rgba(28,42,57,.1); border-radius: 9px; background: rgba(250,251,246,.88); color: #263a46; font-size: 10px; font-weight: 750; text-overflow: ellipsis; white-space: nowrap; box-shadow: 0 2px 8px rgba(15,30,36,.12); pointer-events: none; }
+    .radar-location::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: #ed715e; vertical-align: 1px; }
+    .radar-controls { display: grid; grid-template-columns: 34px minmax(40px,1fr) 46px; align-items: center; gap: 9px; min-height: 28px; }
+    .radar-play { width: 32px; height: 30px; display: grid; place-items: center; border: 1px solid rgba(190,209,235,.2); border-radius: 10px; background: rgba(255,255,255,.06); color: #f4f7fb; cursor: pointer; font-size: 13px; }
+    .radar-play:hover { background: rgba(255,255,255,.13); }
+    .radar-timeline { width: 100%; height: 22px; margin: 0; accent-color: #70d2cf; cursor: pointer; }
+    .radar-time { color: #e5edf7; font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
+    .radar-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 9px; }
+    .radar-credit { color: #c8d6e7; text-underline-offset: 2px; white-space: nowrap; }
+    .radar-credit:hover { color: var(--cyan); }
+    .radar-attribution { position: absolute; z-index: 3; right: 5px; bottom: 4px; padding: 2px 4px; border-radius: 4px; background: rgba(250,251,246,.78); color: #30444f; font: 8px/1.2 Arial,sans-serif; }
+    .radar-attribution a { color: inherit; text-decoration: none; }
     .agenda-bar { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 9px 13px 9px 17px; border: 1px solid var(--line); border-radius: 16px; background: rgba(24,36,55,.88); }
     .agenda-heading { min-width: 105px; }
     .agenda-title { font-size: 14px; font-weight: 700; }
@@ -146,7 +153,7 @@
       .screen { width: 100%; height: auto; min-height: 100vh; padding: 18px; display: flex; flex-direction: column; }
       .hero { display: grid; grid-template-columns: 1fr 1.2fr; }
       .clock-card, .weather-card { min-height: 245px; }
-      .rain-card { grid-column: 1 / -1; min-height: 230px; }
+      .rain-card { grid-column: 1 / -1; min-height: 280px; }
       .agenda-bar { flex-wrap: wrap; }
       .agenda-list { flex-basis: calc(100% - 130px); }
       .news-board { display: flex; flex-direction: column; }
@@ -159,7 +166,7 @@
       .hero { grid-template-columns: 1fr; }
       .clock-card { min-height: 190px; }
       .weather-card { min-height: 265px; }
-      .rain-card { grid-column: auto; min-height: 250px; }
+      .rain-card { grid-column: auto; min-height: 270px; }
       .top-actions .soft-button { font-size: 0; padding: 9px 11px; }
       .top-actions .soft-button::after { content: '⛶'; font-size: 16px; }
       .agenda-heading { min-width: 96px; }
@@ -179,7 +186,7 @@
       <div class="top-actions"><button class="soft-button" id="refreshButton" type="button">↻ Actualizar</button><button class="soft-button" id="fullscreenButton" type="button">⛶ Pantalla completa</button></div>
     </header>
 
-    <section class="hero" aria-label="Hora, clima y lluvia por zonas">
+    <section class="hero" aria-label="Hora, clima y radar de lluvia local">
       <section class="card clock-card" aria-label="Fecha y hora">
         <div class="eyebrow" id="greeting">Buen día</div>
         <div class="clock" id="clock">--:--</div>
@@ -194,10 +201,19 @@
         <div class="forecast" id="forecast" aria-label="Pronóstico de cinco días"></div>
       </section>
 
-      <section class="card rain-card" aria-label="Pronóstico de lluvia por zonas">
-        <div class="rain-heading"><div><div class="eyebrow">Mapa meteorológico</div><div class="rain-title">Lluvia en tu zona</div><div class="rain-summary" id="rainSummary">Pronóstico por hora · Buenos Aires</div></div><span aria-hidden="true">🌧️</span></div>
-        <div class="rain-grid" id="rainGrid" aria-live="polite"></div>
-        <div class="rain-legend"><span>Probabilidad · mm / hora</span><span id="rainUpdated">Actualizando…</span></div>
+      <section class="card rain-card" aria-label="Radar de lluvia local">
+        <div class="rain-heading"><div><div class="eyebrow">Radar meteorológico</div><div class="rain-title">Lluvia cerca tuyo</div><div class="rain-summary" id="rainSummary">Imágenes recientes · Buenos Aires</div></div><span class="radar-live"><i class="radar-dot" aria-hidden="true"></i>Radar</span></div>
+        <div class="radar-map-wrap">
+          <div id="radarMap" role="img" aria-label="Mapa de radar de lluvia para la ubicación elegida"></div>
+          <div class="radar-location" id="radarPlace">Buenos Aires</div>
+          <div class="radar-attribution">Mapa y radar: <a href="https://www.rainviewer.com/" target="_blank" rel="noreferrer">RainViewer</a></div>
+        </div>
+        <div class="radar-controls">
+          <button class="radar-play" id="radarPlay" type="button" aria-label="Pausar animación del radar" title="Pausar / reproducir">Ⅱ</button>
+          <input class="radar-timeline" id="radarTimeline" type="range" min="0" max="0" value="0" aria-label="Recorrer imágenes recientes del radar">
+          <span class="radar-time" id="radarTime">--:--</span>
+        </div>
+        <div class="radar-foot"><span id="radarUpdated">Imágenes de las últimas 2 horas</span><a class="radar-credit" href="https://www.rainviewer.com/" target="_blank" rel="noreferrer">Radar RainViewer ↗</a></div>
       </section>
     </section>
 
@@ -215,7 +231,7 @@
       <article class="news-row" data-category="ciencia" style="--category-color:#8ddb9e"><div class="news-category"><div class="category-name">Ciencia y tecnología</div><div class="category-note">Ideas y descubrimientos</div></div><div class="news-items" id="news-ciencia"><div class="news-loading">Cargando titulares…</div></div></article>
     </section>
 
-    <footer><span id="updatedAt">Actualización automática de clima y titulares.</span><span>Clima y zonas <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> · Noticias Google News</span></footer>
+    <footer><span id="updatedAt">Actualización automática de clima, radar y titulares.</span><span>Clima <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> · Radar RainViewer · Noticias Google News</span></footer>
   </div>
 
   <div class="status" id="status" role="status" aria-live="polite"></div>
@@ -223,11 +239,11 @@
   <div class="modal-backdrop" id="cityModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cityModalTitle">
       <h2 id="cityModalTitle">Tu ubicación</h2>
-      <p>Elegí una ciudad o usá la ubicación del navegador para mostrar el clima y el pronóstico por zonas.</p>
+      <p>Elegí una ciudad o usá la ubicación del navegador para mostrar el clima y el radar de lluvia de esa zona.</p>
       <label class="field">Buscar ciudad<input id="cityInput" type="text" placeholder="Ej.: Córdoba, Argentina" autocomplete="off"></label>
       <div class="result-list" id="cityResults"></div>
       <div class="modal-actions"><button class="soft-button close-modal" type="button">Cancelar</button><button class="soft-button" id="geoButton" type="button">◎ Usar ubicación actual</button><button class="small-action" id="searchCity" type="button">Buscar ciudad</button></div>
-      <p class="privacy-note">Si elegís ubicación actual, las coordenadas se envían a Open-Meteo para consultar el clima y el pronóstico de las zonas cercanas. La ubicación elegida queda guardada solo en este navegador.</p>
+      <p class="privacy-note">Si elegís ubicación actual, las coordenadas se usan para centrar el clima y el radar. La ubicación queda guardada solo en este navegador.</p>
     </div>
   </div>
 
@@ -242,6 +258,7 @@
     </div>
   </div>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script>
     (() => {
       'use strict';
@@ -263,6 +280,13 @@
       let agenda = readSaved('miCasa.agenda', []);
       let statusTimer;
       let wakeLock = null;
+      let radarMap = null;
+      let radarLayer = null;
+      let radarMarker = null;
+      let radarFrames = [];
+      let radarFrameIndex = 0;
+      let radarAnimation = null;
+      let radarPlaying = true;
 
       function notice(message) {
         const el = $('status'); el.textContent = message; el.classList.add('show');
@@ -311,7 +335,9 @@
       }
       function updatePlaceLabel() {
         $('cityName').textContent = cityLabel(place);
-        $('rainSummary').textContent = 'Pronóstico por hora · ' + (place.name || cityLabel(place));
+        const label = place.name || cityLabel(place);
+        $('rainSummary').textContent = 'Imágenes recientes · ' + label;
+        $('radarPlace').textContent = label;
       }
       async function loadWeather(force = false) {
         updatePlaceLabel();
@@ -359,75 +385,89 @@
       }
       loadWeather(); setInterval(loadWeather, UPDATE_MS);
 
-      const ZONE_LABELS = ['Noroeste', 'Norte', 'Noreste', 'Oeste', 'Tu zona', 'Este', 'Sudoeste', 'Sur', 'Sudeste'];
-      let zoneFrames = null;
-      let zoneStep = 0;
-      function zonePoints() {
-        const lat = Number(place.latitude), lon = Number(place.longitude);
-        const dLat = .11;
-        const dLon = .11 / Math.max(.25, Math.cos(lat * Math.PI / 180));
-        const offsets = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,0],[0,1],[1,-1],[1,0],[1,1]];
-        return offsets.map(([dy, dx]) => ({ latitude: lat + dy*dLat, longitude: lon + dx*dLon }));
+      function radarTime(frame) {
+        return frame ? new Intl.DateTimeFormat('es-AR', { timeZone: AR_TZ, hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(frame.time * 1000)) : '--:--';
       }
-      function renderZoneLoading(message = 'Calculando…') {
-        $('rainGrid').innerHTML = ZONE_LABELS.map((label, i) => `<div class="rain-cell${i === 4 ? ' center' : ''}"><span class="rain-zone">${label}</span><span class="rain-prob">—</span><span class="rain-mm">${message}</span></div>`).join('');
+      function radarTileUrl(frame) {
+        return `https://tilecache.rainviewer.com${frame.path}/256/{z}/{x}/{y}/2/1_0.png`;
       }
-      async function loadZoneForecast(force = false) {
+      function initRadarMap() {
+        if (!window.L) {
+          $('radarMap').innerHTML = '<div class="news-loading">No se pudo abrir el mapa. Revisá la conexión.</div>';
+          $('radarUpdated').textContent = 'Mapa no disponible';
+          return false;
+        }
+        radarMap = L.map('radarMap', {
+          zoomControl: false, attributionControl: false, scrollWheelZoom: false,
+          doubleClickZoom: false, dragging: false, touchZoom: false, boxZoom: false,
+          keyboard: false, zoomSnap: 1, minZoom: 0, maxZoom: 7
+        }).setView([Number(place.latitude), Number(place.longitude)], 7);
+        L.tileLayer('https://maps.rainviewer.com/styles/m2/{z}/{x}/{y}.png', {
+          minZoom: 0, maxZoom: 7, maxNativeZoom: 7, tileSize: 256
+        }).addTo(radarMap);
+        radarMarker = L.circleMarker([Number(place.latitude), Number(place.longitude)], {
+          radius: 5, color: '#fff', weight: 2, fillColor: '#ed715e', fillOpacity: 1
+        }).addTo(radarMap);
+        setTimeout(() => radarMap && radarMap.invalidateSize(), 150);
+        return true;
+      }
+      function setRadarFrame(index) {
+        if (!radarFrames.length) return;
+        radarFrameIndex = Math.max(0, Math.min(Number(index), radarFrames.length - 1));
+        const frame = radarFrames[radarFrameIndex];
+        const url = radarTileUrl(frame);
+        if (!radarLayer && radarMap) {
+          radarLayer = L.tileLayer(url, { minZoom: 0, maxZoom: 7, maxNativeZoom: 7, tileSize: 256, opacity: .72 }).addTo(radarMap);
+        } else if (radarLayer) radarLayer.setUrl(url);
+        $('radarTimeline').max = String(radarFrames.length - 1);
+        $('radarTimeline').value = String(radarFrameIndex);
+        $('radarTime').textContent = radarTime(frame);
+        $('radarTimeline').setAttribute('aria-valuetext', `Imagen de las ${radarTime(frame)}`);
+      }
+      function setRadarPlaying(playing) {
+        radarPlaying = playing;
+        clearInterval(radarAnimation);
+        $('radarPlay').textContent = playing ? 'Ⅱ' : '▶';
+        $('radarPlay').setAttribute('aria-label', playing ? 'Pausar animación del radar' : 'Reproducir animación del radar');
+        if (playing) radarAnimation = setInterval(() => {
+          if (radarFrames.length > 1) setRadarFrame((radarFrameIndex + 1) % radarFrames.length);
+        }, 1200);
+      }
+      async function loadRadar(force = false, recenter = false) {
         updatePlaceLabel();
-        const cacheKey = 'miCasa.zones.' + Number(place.latitude).toFixed(3) + ',' + Number(place.longitude).toFixed(3);
-        const cached = force ? null : cacheFresh(cacheKey);
-        if (cached) { renderZoneForecast(cached); return; }
+        if (!radarMap && !initRadarMap()) return;
+        if (recenter) {
+          const point = [Number(place.latitude), Number(place.longitude)];
+          radarMap.setView(point, 7);
+          if (radarMarker) radarMarker.setLatLng(point);
+        }
         try {
-          const points = zonePoints();
-          const params = new URLSearchParams({
-            latitude: points.map(p => p.latitude.toFixed(4)).join(','),
-            longitude: points.map(p => p.longitude.toFixed(4)).join(','),
-            hourly: 'precipitation_probability,precipitation', forecast_hours: '12', timezone: 'auto'
-          });
-          const response = await fetch(WEATHER_URL + '?' + params.toString(), { cache: 'no-store' });
-          if (!response.ok) throw new Error('zones');
+          const response = await fetch('https://api.rainviewer.com/public/weather-maps.json', { cache: 'no-store' });
+          if (!response.ok) throw new Error('radar');
           const data = await response.json();
-          localStorage.setItem(cacheKey, JSON.stringify({ at: Date.now(), data }));
-          renderZoneForecast(data);
+          const nextFrames = data.radar?.past || [];
+          if (!nextFrames.length) throw new Error('no frames');
+          const previousTime = radarFrames[radarFrameIndex]?.time;
+          const previousLatestTime = radarFrames[radarFrames.length - 1]?.time;
+          const changed = nextFrames[nextFrames.length - 1]?.time !== previousLatestTime;
+          radarFrames = nextFrames;
+          let selectedIndex = previousTime ? radarFrames.findIndex(frame => frame.time === previousTime) : -1;
+          if (selectedIndex < 0 || (changed && previousTime === previousLatestTime)) selectedIndex = radarFrames.length - 1;
+          if (force && !previousTime) selectedIndex = radarFrames.length - 1;
+          setRadarFrame(selectedIndex);
+          $('radarUpdated').textContent = `Última imagen: ${radarTime(radarFrames[radarFrames.length - 1])} · pasos de 10 min`;
+          if (radarPlaying) setRadarPlaying(true);
         } catch (_) {
-          renderZoneLoading('Sin conexión');
-          $('rainUpdated').textContent = 'Sin conexión';
+          if (!radarFrames.length) $('radarUpdated').textContent = 'Radar no disponible; se reintenta solo.';
         }
       }
-      function renderZoneForecast(data) {
-        const forecasts = Array.isArray(data) ? data : [data];
-        const now = new Date();
-        const nowParts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: AR_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23' }).formatToParts(now).map(part => [part.type, part.value]));
-        const currentHour = `${nowParts.year}-${nowParts.month}-${nowParts.day}T${nowParts.hour}`;
-        zoneFrames = forecasts.slice(0, 9).map(forecast => {
-          const hours = forecast.hourly || {};
-          let start = Array.isArray(hours.time) ? hours.time.findIndex(t => t >= currentHour) : 0;
-          if (start < 0) start = 0;
-          return { hours, start };
-        });
-        zoneStep = 0;
-        renderZoneForecastStep(now);
-      }
-      function renderZoneForecastStep(now = new Date()) {
-        if (!zoneFrames) return;
-        const cells = zoneFrames.map(({ hours, start }, i) => {
-          const index = start + zoneStep;
-          const chance = hours.precipitation_probability?.[index];
-          const precip = hours.precipitation?.[index];
-          const level = chance >= 60 ? 'high' : chance >= 30 ? 'medium' : chance > 0 ? 'low' : '';
-          const center = i === 4 ? ' center' : '';
-          const amount = !Number.isFinite(precip) || precip < .1 ? '0 mm' : precip.toFixed(1) + ' mm';
-          return `<div class="rain-cell${center} ${level}" title="${escapeHtml(ZONE_LABELS[i])}: ${chance == null ? 'sin dato' : chance + '%'} de probabilidad, ${amount} previstos en esa hora"><span class="rain-zone">${escapeHtml(ZONE_LABELS[i])}</span><span class="rain-prob">${chance == null ? '—' : chance + '%'}</span><span class="rain-mm">${amount} / h</span></div>`;
-        }).join('');
-        $('rainGrid').innerHTML = cells;
-        const firstTime = zoneFrames[0]?.hours.time?.[zoneFrames[0].start + zoneStep] || '';
-        const hourLabel = firstTime.slice(-5);
-        const horizon = zoneStep === 0 ? 'Ahora' : `En ${zoneStep} h`;
-        $('rainSummary').textContent = `${horizon}${hourLabel ? ' · ' + hourLabel : ''} · ${place.name || cityLabel(place)}`;
-        $('rainUpdated').textContent = 'Actualizado ' + new Intl.DateTimeFormat('es-AR', { timeZone: AR_TZ, hour: '2-digit', minute: '2-digit', hour12: false }).format(now);
-      }
-      loadZoneForecast(); setInterval(loadZoneForecast, UPDATE_MS);
-      setInterval(() => { if (zoneFrames) { zoneStep = (zoneStep + 1) % 3; renderZoneForecastStep(); } }, 8000);
+      $('radarPlay').addEventListener('click', () => setRadarPlaying(!radarPlaying));
+      $('radarTimeline').addEventListener('input', event => {
+        setRadarPlaying(false);
+        setRadarFrame(event.target.value);
+      });
+      loadRadar(true);
+      setInterval(() => loadRadar(), 5 * 60 * 1000);
 
       function renderCategory(category, items) {
         const container = $('news-' + category.id);
@@ -450,7 +490,7 @@
         }
       }
       loadNews(); setInterval(loadNews, UPDATE_MS);
-      $('refreshButton').addEventListener('click', () => { loadWeather(true); loadZoneForecast(true); loadNews(true); notice('Actualizando el panel…'); });
+      $('refreshButton').addEventListener('click', () => { loadWeather(true); loadRadar(true); loadNews(true); notice('Actualizando el panel…'); });
 
       function renderAgenda() {
         const today = todayAR();
@@ -494,7 +534,7 @@
           if (!results.length) { $('cityResults').innerHTML = '<div class="news-loading">No encontramos la ciudad. Probá agregando el país.</div>'; return; }
           $('cityResults').innerHTML = results.map((item, index) => `<button class="result-button" type="button" data-index="${index}">${escapeHtml(cityLabel(item))}</button>`).join('');
           $('cityResults').querySelectorAll('.result-button').forEach(button => button.addEventListener('click', () => {
-            place = results[Number(button.dataset.index)]; localStorage.setItem('miCasa.place', JSON.stringify(place)); closeModal($('cityModal')); loadWeather(); loadZoneForecast(); notice('Ubicación actualizada.');
+            place = results[Number(button.dataset.index)]; localStorage.setItem('miCasa.place', JSON.stringify(place)); closeModal($('cityModal')); loadWeather(); loadRadar(true, true); notice('Ubicación actualizada.');
           }));
           $('cityResults').querySelector('.result-button')?.focus();
         } catch (_) { $('cityResults').innerHTML = '<div class="news-loading">No se pudo buscar. Revisá la conexión.</div>'; }
@@ -506,7 +546,7 @@
         $('geoButton').textContent = 'Buscando ubicación…';
         navigator.geolocation.getCurrentPosition(position => {
           place = { name: 'Mi ubicación', label: 'Mi ubicación', latitude: position.coords.latitude, longitude: position.coords.longitude };
-          localStorage.setItem('miCasa.place', JSON.stringify(place)); closeModal($('cityModal')); loadWeather(); loadZoneForecast(); notice('Ubicación actualizada.'); $('geoButton').textContent = '◎ Usar ubicación actual';
+          localStorage.setItem('miCasa.place', JSON.stringify(place)); closeModal($('cityModal')); loadWeather(); loadRadar(true, true); notice('Ubicación actualizada.'); $('geoButton').textContent = '◎ Usar ubicación actual';
         }, () => { $('geoButton').textContent = '◎ Usar ubicación actual'; notice('No se autorizó la ubicación. Podés buscar tu ciudad.'); }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 30 * 60 * 1000 });
       });
 

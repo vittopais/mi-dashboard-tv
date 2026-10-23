@@ -1,30 +1,28 @@
-# Panel personal para la tele
+# Mi casa · Panel para la tele
 
-Panel web en español para una Sony con Android TV. Incluye reloj y fecha de Argentina, clima local, pronóstico de lluvia en nueve zonas cercanas, agenda y tres titulares en cada una de cinco secciones.
+El panel ya está publicado gratis en GitHub Pages:
 
-## Publicarlo gratis en GitHub Pages
+**https://vittopais.github.io/mi-dashboard-tv/**
 
-El sitio está listo para subirse a un repositorio de GitHub. Para publicarlo:
-
-1. Creá un repositorio llamado `mi-dashboard-tv` y subí **todo el contenido de esta carpeta** a la carpeta principal del repositorio, incluidas las carpetas ocultas `.github` y `scripts`.
-2. En el repositorio, abrí **Settings → Pages** y en **Build and deployment** elegí **GitHub Actions**.
-3. La publicación automática se ejecutará al subir los archivos. También actualizará las noticias aproximadamente cada 15 minutos.
-4. GitHub mostrará una dirección similar a `https://tu-usuario.github.io/mi-dashboard-tv/`.
-
-El repositorio debe ser público para usar GitHub Pages gratis. El panel no sube la agenda ni guarda credenciales. El actualizador trae los titulares desde Google News en el servidor de GitHub; así evita el bloqueo del convertidor RSS que impedía ver las noticias. GitHub puede retrasar ocasionalmente una ejecución programada.
+Incluye reloj y fecha de Argentina, clima local y pronóstico de cinco días, radar de lluvia animado, agenda y titulares en cinco secciones.
 
 ## Abrirlo en la Sony
 
-1. Conectá la tele a Internet y abrí Play Store.
-2. Instalá **TV Bro** si aparece disponible para tu modelo. Es un navegador para Android TV que se maneja con el control remoto.
-3. Escribí la dirección de GitHub Pages, usá **Pantalla completa** y guardala como favorito.
+1. Conectá la tele a Internet y entrá a **Apps → Google Play Store**.
+2. Buscá **TV Bro** e instalalo si aparece como compatible con tu tele. Sony no trae un navegador de Internet en todos sus modelos; también puede aparecer como **Internet Browser** o **Opera** según el modelo y el software.
+3. Abrí el navegador y escribí esta dirección completa: **vittopais.github.io/mi-dashboard-tv/**
+4. Cuando cargue, elegí **Pantalla completa** arriba a la derecha. Guardá la página como favorito para la próxima vez.
 
-La página intenta mantener la pantalla activa si el navegador de la tele admite esa función. Sony puede activar su protector de pantalla o el apagado por inactividad según el modelo y los ajustes de energía. Revisá los ajustes de **Protector de pantalla** y **Ahorro de energía** de la tele. En pantallas OLED, dejá activadas sus protecciones contra retención.
+No hace falta buscar el panel en Google ni conectar la Flow Box: podés abrirlo desde la propia Sony. Si usás la Flow Box, también podés probar esos mismos pasos allí si tiene Play Store y navegador.
 
-## Qué se actualiza y qué se guarda
+## Uso del panel
 
-- El reloj y la fecha se actualizan en pantalla. Clima y lluvia por zonas se consultan cada 10 minutos; los titulares se regeneran aproximadamente cada 15 minutos.
-- La cuadrícula muestra nueve zonas alrededor de la ubicación elegida. Alterna automáticamente cada ocho segundos entre la hora actual y las dos siguientes; en cada zona indica la probabilidad y los milímetros previstos para esa hora. Es pronóstico por zona, no una imagen de radar en movimiento.
-- El clima usa Open-Meteo. Las noticias son titulares de Google News y cada tarjeta abre la nota original.
-- La ubicación inicial es Buenos Aires. Se puede cambiar buscando una ciudad o autorizando la ubicación del navegador. Si elegís la ubicación actual, las coordenadas se envían a Open-Meteo para el pronóstico; la ubicación queda guardada solo en ese navegador.
-- La agenda se guarda únicamente en el almacenamiento local del navegador de la tele. No se sincroniza con otros dispositivos ni se sube a GitHub.
+- La hora y la fecha se mantienen al día. El clima se renueva cada 10 minutos y las noticias se actualizan aproximadamente cada 15 minutos.
+- El radar muestra lluvia observada y reproduce imágenes recientes, con marcas de tiempo en intervalos de diez minutos. La página consulta si hay imágenes nuevas cada cinco minutos. La animación permite recorrer las últimas dos horas; no es un pronóstico hacia adelante.
+- El mapa y las imágenes del radar vienen de RainViewer. Si ese servicio no tiene imágenes disponibles para la zona o está temporalmente caído, el panel vuelve a intentarlo solo.
+- La ubicación inicial es Buenos Aires. Se cambia con **Cambiar ubicación** o seleccionando la ubicación del navegador. La selección se guarda solo en ese navegador.
+- La agenda se guarda solo en el navegador de la tele y no se sincroniza con otros equipos.
+
+## Para que quede encendido
+
+El panel intenta impedir que el navegador apague la pantalla, pero la Sony puede aplicar su propio protector de pantalla o ahorro de energía. Si la tele se duerme, revisá **Ajustes → Sistema → Energía** y **Protector de pantalla**; el nombre de las opciones cambia según el modelo. En televisores OLED, mantené activadas las protecciones de pantalla del fabricante.
