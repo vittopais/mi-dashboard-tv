@@ -1,26 +1,26 @@
 # Mi casa · Panel para la tele
 
-El panel ya está publicado gratis en GitHub Pages:
+El panel está publicado gratis en GitHub Pages:
 
 **https://vittopais.github.io/mi-dashboard-tv/**
 
-Incluye reloj y fecha de Argentina, clima local y pronóstico de cinco días, radar de lluvia animado, agenda y titulares en cinco secciones.
+Incluye reloj y fecha de Argentina, clima local y pronóstico de cinco días, un mapa meteorológico animado de Argentina, agenda y titulares en cinco secciones.
 
 ## Abrirlo en la Sony
 
 1. Conectá la tele a Internet y entrá a **Apps → Google Play Store**.
-2. Buscá **TV Bro** e instalalo si aparece como compatible con tu tele. Sony no trae un navegador de Internet en todos sus modelos; también puede aparecer como **Internet Browser** o **Opera** según el modelo y el software.
+2. Buscá **TV Bro** e instalalo si aparece como compatible con tu tele. Sony no trae un navegador de Internet en todos sus modelos; también puede aparecer como **Internet Browser** u **Opera**, según el modelo y el software.
 3. Abrí el navegador y escribí esta dirección completa: **vittopais.github.io/mi-dashboard-tv/**
-4. Cuando cargue, elegí **Pantalla completa** arriba a la derecha. Guardá la página como favorito para la próxima vez.
+4. Cuando cargue, elegí **Pantalla completa** arriba a la derecha y guardá la página como favorito.
 
-No hace falta buscar el panel en Google ni conectar la Flow Box: podés abrirlo desde la propia Sony. Si usás la Flow Box, también podés probar esos mismos pasos allí si tiene Play Store y navegador.
+No hace falta buscar el panel en Google ni conectar la Flow Box: podés abrirlo desde la propia Sony. Si usás la Flow Box, también podés probar esos pasos si tiene Play Store y navegador.
 
-## Uso del panel
+## Cómo se actualiza
 
-- La hora y la fecha se mantienen al día. El clima se renueva cada 10 minutos y las noticias se actualizan aproximadamente cada 15 minutos.
-- El radar muestra lluvia observada y reproduce imágenes recientes, con marcas de tiempo en intervalos de diez minutos. La página consulta si hay imágenes nuevas cada cinco minutos. La animación permite recorrer las últimas dos horas; no es un pronóstico hacia adelante.
-- El mapa y las imágenes del radar vienen de RainViewer. Si ese servicio no tiene imágenes disponibles para la zona o está temporalmente caído, el panel vuelve a intentarlo solo.
-- La ubicación inicial es Buenos Aires. Se cambia con **Cambiar ubicación** o seleccionando la ubicación del navegador. La selección se guarda solo en ese navegador.
+- La hora y la fecha se mantienen al día. El clima se renueva cada 10 minutos y los titulares se actualizan periódicamente.
+- El mapa de Meteored muestra precipitación y movimiento de partículas sobre Argentina. La animación está dentro del mapa, no es un video. La información meteorológica depende de las actualizaciones del modelo de Meteored; es un mapa de pronóstico, no un radar de lluvia observada.
+- El mapa es regional; cambiar la ciudad actualiza el clima local y conserva el mapa de Argentina.
+- La ubicación inicial es Buenos Aires. Se cambia con **Cambiar ubicación** o eligiendo la ubicación del navegador. La selección se guarda solo en ese navegador.
 - La agenda se guarda solo en el navegador de la tele y no se sincroniza con otros equipos.
 
 ## Para que quede encendido
