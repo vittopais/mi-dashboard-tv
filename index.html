@@ -77,16 +77,16 @@
     .rain-card { padding: clamp(13px, 1.45vw, 22px); display: flex; flex-direction: column; gap: 9px; background: linear-gradient(150deg, rgba(32,53,77,.97), rgba(24,36,55,.96) 73%); }
     .rain-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 7px; }
     .rain-title { margin-top: 4px; font-size: clamp(13px, 1.2vw, 17px); font-weight: 700; }
-    .rain-summary { margin-top: 3px; color: var(--muted); font-size: 10px; }
-    .rain-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 5px; }
-    .rain-cell { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 3px; border: 1px solid rgba(190,209,235,.11); border-radius: 11px; background: rgba(255,255,255,.035); text-align: center; }
+    .rain-summary { max-width: 100%; margin-top: 3px; overflow: hidden; color: var(--muted); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+    .rain-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 4px; }
+    .rain-cell { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: 2px 1px; border: 1px solid rgba(190,209,235,.11); border-radius: 11px; background: rgba(255,255,255,.035); text-align: center; line-height: 1; }
     .rain-cell.center { border-color: rgba(132,213,214,.42); background: rgba(132,213,214,.1); }
     .rain-cell.low { background: rgba(63,139,151,.14); }
     .rain-cell.medium { background: rgba(193,152,69,.2); }
     .rain-cell.high { background: rgba(181,92,89,.26); }
-    .rain-zone { max-width: 100%; color: #c1cde0; font-size: clamp(8px, .74vw, 10px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .rain-prob { font-size: clamp(14px, 1.45vw, 21px); font-weight: 750; font-variant-numeric: tabular-nums; }
-    .rain-mm { color: #bdc9da; font-size: clamp(8px, .7vw, 10px); }
+    .rain-zone { max-width: 100%; color: #c1cde0; font-size: clamp(8px, .68vw, 9px); line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rain-prob { font-size: clamp(12px, 1.05vw, 15px); line-height: 1.05; font-weight: 750; font-variant-numeric: tabular-nums; }
+    .rain-mm { color: #bdc9da; font-size: clamp(7px, .62vw, 8px); line-height: 1.05; }
     .rain-legend { display: flex; justify-content: space-between; gap: 6px; color: var(--muted); font-size: 9px; }
     .agenda-bar { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 9px 13px 9px 17px; border: 1px solid var(--line); border-radius: 16px; background: rgba(24,36,55,.88); }
     .agenda-heading { min-width: 105px; }
@@ -311,7 +311,7 @@
       }
       function updatePlaceLabel() {
         $('cityName').textContent = cityLabel(place);
-        $('rainSummary').textContent = 'Próximas 3 horas · ' + cityLabel(place);
+        $('rainSummary').textContent = 'Próximas 3 h · ' + (place.name || cityLabel(place));
       }
       async function loadWeather(force = false) {
         updatePlaceLabel();
