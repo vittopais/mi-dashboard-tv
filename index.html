@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0a0c0e">
-  <meta name="description" content="Mi casa: panel personal para TV con hora, fecha, clima local, tu lista de Notion y noticias del día.">
+  <meta name="description" content="Mi casa: panel personal para TV con hora, fecha, clima local y noticias del día.">
   <meta name="robots" content="index,follow">
   <meta name="google-site-verification" content="N7aH5845yywY78QzBBAWYuNp7Mmi-SAk7K0aTUAt238">
   <link rel="preload" href="./assets/fonts/Inter-Variable.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="canonical" href="https://vittopais.github.io/mi-dashboard-tv/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Mi casa | Panel personal para TV">
-  <meta property="og:description" content="Hora, clima local, tu lista de Notion y noticias para tener en pantalla.">
+  <meta property="og:description" content="Hora, clima local y noticias para tener en pantalla.">
   <meta property="og:url" content="https://vittopais.github.io/mi-dashboard-tv/">
   <title>Mi casa | Panel personal para TV</title>
   <style>
@@ -60,7 +60,7 @@
       padding: clamp(12px, 1.35vw, 26px) clamp(16px, 2.4vw, 48px) clamp(10px, 1.15vw, 22px);
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      grid-template-rows: auto minmax(185px, .78fr) minmax(96px, .38fr) minmax(0, 1.24fr) auto;
+      grid-template-rows: auto minmax(185px, .78fr) minmax(0, 1.62fr) auto;
       gap: clamp(8px, .9vw, 16px);
     }
     header { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; min-height: 40px; }
@@ -139,25 +139,8 @@
       transition: background .2s, border-color .2s;
     }
     .small-action:hover { background: rgba(255,255,255,.12); border-color: rgba(238,242,244,.28); }
-    .notion-card {
-      grid-column: 1 / -1; grid-row: 3; min-width: 0; min-height: 0;
-      display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 7px;
-      padding: 10px clamp(14px, 1.6vw, 25px); border: 1px solid var(--line); border-radius: 16px;
-      background: linear-gradient(145deg, #171a1c, #121416); color: var(--text);
-      box-shadow: 0 10px 26px rgba(0,0,0,.15);
-    }
-    .notion-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-    .notion-title { font-size: 13px; font-weight: 680; }
-    .notion-meta { color: var(--muted); font-size: 9px; white-space: nowrap; }
-    .notion-list { min-width: 0; min-height: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); align-content: center; gap: 7px 22px; overflow: auto; scrollbar-width: thin; }
-    .notion-task { min-width: 0; display: flex; align-items: center; gap: 8px; color: #e1e4e6; font-size: clamp(11px, .9vw, 14px); line-height: 1.25; }
-    .notion-task > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .notion-check { width: 14px; height: 14px; flex: 0 0 14px; display: grid; place-items: center; border: 1px solid #70787d; border-radius: 4px; color: #101214; font-size: 10px; }
-    .notion-task.is-done { color: #929a9f; text-decoration: line-through; }
-    .notion-task.is-done .notion-check { border-color: #aab3b8; background: #aab3b8; }
-    .notion-empty { grid-column: 1 / -1; color: var(--muted); font-size: 10px; }
     .news-board {
-      grid-column: 1 / -1; grid-row: 4; min-height: 0;
+      grid-column: 1 / -1; grid-row: 3; min-height: 0;
       display: grid; grid-template-rows: auto repeat(6, minmax(0, 1fr));
       padding: 8px clamp(14px, 1.6vw, 25px);
       border: 1px solid var(--line); border-radius: 19px;
@@ -209,7 +192,7 @@
     .result-button:hover { background: rgba(255,255,255,.09); }
     .privacy-note { color: #aeb4b8; font-size: 11px !important; }
     @media (min-width: 901px) and (max-height: 820px) {
-      .screen { padding-top: 8px; padding-bottom: 6px; gap: 6px; grid-template-rows: auto minmax(160px,.72fr) minmax(88px,.38fr) minmax(0,1.18fr) auto; }
+      .screen { padding-top: 8px; padding-bottom: 6px; gap: 6px; grid-template-rows: auto minmax(160px,.72fr) minmax(0,1.18fr) auto; }
       header { min-height: 32px; }
       .brand-mark { width: 31px; height: 31px; border-radius: 11px; }
       .clock-card { padding: 11px 16px; }
@@ -225,9 +208,6 @@
       .forecast-day { font-size: 9px; }
       .forecast-icon { font-size: 13px; margin: 2px 0; }
       .forecast-temps { font-size: 9px; }
-      .notion-card { padding-top: 6px; padding-bottom: 6px; gap: 4px; }
-      .notion-list { gap: 5px 14px; }
-      .notion-task { font-size: 11px; }
       .news-board { padding-top: 5px; padding-bottom: 5px; }
       .news-heading { min-height: 22px; font-size: 10px; }
       .news-row { padding: 3px 0; }
@@ -237,7 +217,7 @@
       .category-note { font-size: 8px; }
     }
     @media (min-width: 901px) and (max-height: 700px) {
-      .screen { padding-top: 5px; padding-bottom: 4px; gap: 5px; grid-template-rows: auto minmax(128px,.64fr) minmax(76px,.38fr) minmax(0,1.24fr) auto; }
+      .screen { padding-top: 5px; padding-bottom: 4px; gap: 5px; grid-template-rows: auto minmax(128px,.64fr) minmax(0,1.24fr) auto; }
       header { min-height: 28px; }
       .brand-mark { width: 27px; height: 27px; font-size: 17px; }
       .brand-caption { font-size: 9px; }
@@ -255,11 +235,6 @@
       .forecast-day { font-size: 8px; }
       .forecast-icon { font-size: 11px; margin: 1px 0; }
       .forecast-temps { font-size: 8px; }
-      .notion-card { padding-top: 5px; padding-bottom: 5px; }
-      .notion-title { font-size: 11px; }
-      .notion-meta { font-size: 8px; }
-      .notion-check { width: 12px; height: 12px; flex-basis: 12px; }
-      .notion-task { font-size: 10px; }
       .news-board { padding-top: 3px; padding-bottom: 3px; }
       .news-heading { min-height: 18px; font-size: 9px; }
       .news-heading span:last-child { font-size: 8px; }
@@ -276,9 +251,6 @@
       header { min-height: 42px; }
       .hero { display: flex; flex-direction: column; gap: 12px; }
       .clock-card, .weather-card { min-height: 220px; }
-      .notion-card { min-height: 135px; }
-      .notion-list { grid-template-columns: repeat(2, minmax(0,1fr)); align-content: center; }
-      .notion-task { font-size: 12px; }
       .news-board { min-height: 450px; display: grid; grid-template-rows: auto repeat(6, minmax(65px, auto)); }
       .news-row { grid-template-columns: 115px minmax(0,1fr); min-height: 72px; }
       .news-items { grid-template-columns: minmax(0,1fr); }
@@ -321,11 +293,6 @@
     </section>
 
 
-    <section class="notion-card" aria-label="Lista de tareas de Notion">
-      <div class="notion-head"><div class="notion-title">Mi día</div><div class="notion-meta" id="notionMeta">Conectando con Notion…</div></div>
-      <div class="notion-list" id="notionList" aria-live="polite"><div class="notion-empty">Cargando tareas…</div></div>
-    </section>
-
     <section class="news-board" id="newsBoard" aria-label="Noticias del día">
       <div class="news-heading"><span>Lo importante de hoy</span><span>Selección automática · titulares recientes</span></div>
       <article class="news-row" data-category="argentina"><div class="news-category"><div class="category-name">Argentina</div><div class="category-note">Actualidad nacional</div></div><div class="news-items" id="news-argentina"><div class="news-loading">Cargando titulares…</div></div></article>
@@ -336,7 +303,7 @@
       <article class="news-row" data-category="ia"><div class="news-category"><div class="category-name">IA</div><div class="category-note">Inteligencia artificial</div></div><div class="news-items" id="news-ia"><div class="news-loading">Cargando titulares…</div></div></article>
     </section>
 
-    <footer><span id="updatedAt">Actualización automática de clima y titulares.</span><span>Clima Open-Meteo · Google News · Notion</span></footer>
+    <footer><span id="updatedAt">Actualización automática de clima y titulares.</span><span>Clima Open-Meteo · Google News</span></footer>
   </div>
 
   <div class="status" id="status" role="status" aria-live="polite"></div>
@@ -360,10 +327,7 @@
       const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
       const WEATHER_REFRESH_MS = 5 * 60 * 1000;
       const NEWS_POLL_MS = 5 * 60 * 1000;
-      // Refresca seguido para mostrar pronto cada publicación nueva de GitHub Pages.
-      const NOTION_POLL_MS = 60 * 1000;
       const NEWS_URL = './news.json';
-      const NOTION_URL = ['localhost', '127.0.0.1'].includes(location.hostname) ? './notion-preview.json' : './notion.json';
       const NEWS_CATEGORIES = [
         { id: 'argentina', label: 'Argentina' },
         { id: 'mundo', label: 'Mundo' },
@@ -381,7 +345,6 @@
       let newsUpdatedAt = null;
       let weatherLoading = false;
       let newsLoading = false;
-      let notionLoading = false;
 
       function notice(message) {
         const el = $('status'); el.textContent = message; el.classList.add('show');
@@ -515,38 +478,6 @@
       }
       loadNews(); setInterval(loadNews, NEWS_POLL_MS);
 
-      function renderNotion(data) {
-        const tasks = Array.isArray(data.tasks) ? data.tasks : [];
-        const pending = tasks.filter(task => !task.checked).length;
-        const hasSnapshot = Boolean(data.updated_at);
-        const source = data.preview ? 'vista previa' : hasSnapshot ? `Notion · ${formatUpdateTime(Date.parse(data.updated_at))}` : 'sin conectar';
-        $('notionMeta').textContent = hasSnapshot ? `${pending} pendiente${pending === 1 ? '' : 's'} · ${source}` : source;
-        if (!tasks.length) {
-          $('notionList').innerHTML = `<div class="notion-empty">${hasSnapshot ? 'Todavía no hay tareas en la lista.' : 'La lista aparecerá aquí cuando se active la conexión.'}</div>`;
-          return;
-        }
-        $('notionList').innerHTML = tasks.map(task => {
-          const done = task.checked === true;
-          return `<div class="notion-task${done ? ' is-done' : ''}"><span class="notion-check" aria-hidden="true">${done ? '✓' : ''}</span><span>${escapeHtml(task.text || '')}</span></div>`;
-        }).join('');
-      }
-      async function loadNotion() {
-        if (notionLoading) return;
-        notionLoading = true;
-        try {
-          const response = await fetch(NOTION_URL + '?t=' + Date.now(), { cache: 'no-store' });
-          if (!response.ok) throw new Error('notion');
-          const data = await response.json();
-          renderNotion(data);
-        } catch (_) {
-          $('notionMeta').textContent = 'Sin conexión';
-          $('notionList').innerHTML = '<div class="notion-empty">La lista de Notion se mostrará cuando se active la sincronización.</div>';
-        } finally {
-          notionLoading = false;
-        }
-      }
-      loadNotion(); setInterval(loadNotion, NOTION_POLL_MS);
-
       function openModal(id, focusId) {
         const modal = $(id); modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
         setTimeout(() => $(focusId)?.focus(), 100);
@@ -597,7 +528,6 @@
           holdScreenAwake();
           loadWeather();
           loadNews();
-          loadNotion();
         }
       });
       $('fullscreenButton').addEventListener('click', async () => {

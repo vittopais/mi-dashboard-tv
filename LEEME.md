@@ -6,7 +6,7 @@ El panel está publicado gratis en GitHub Pages:
 
 El sitio está abierto al rastreo de buscadores y publica un sitemap. Que aparezca en los resultados depende de Google: rastrear e indexar puede tardar y no se garantiza de inmediato.
 
-Incluye reloj y fecha de Argentina, clima local y pronóstico de cinco días, la lista de tareas “Día” de Notion y titulares en seis secciones: Argentina, Mundo, Economía, Ciencia, Tecnología e IA.
+Incluye reloj y fecha de Argentina, clima local y pronóstico de cinco días, y titulares en seis secciones: Argentina, Mundo, Economía, Ciencia, Tecnología e IA.
 
 ## Abrirlo en la Sony
 
@@ -18,13 +18,8 @@ El sitio ya está alojado en GitHub Pages: queda disponible en Internet aunque t
 
 ## Cómo se actualiza
 
-- La hora y la fecha se mantienen al día. El clima y los titulares se actualizan automáticamente. La página revisa la lista de Notion cada minuto; GitHub sincroniza y publica cambios cada cinco minutos, aunque puede demorarse un poco más.
+- La hora y la fecha se mantienen al día. El clima se actualiza automáticamente y GitHub Actions obtiene titulares nuevos y publica el panel cada cinco minutos, aunque puede demorarse un poco más.
 - La ubicación inicial es Buenos Aires. Se cambia con **Cambiar ubicación** o eligiendo la ubicación del navegador. La selección se guarda solo en ese navegador.
-- La tarjeta “Mi día” reemplaza la agenda y muestra la lista de Notion en modo de lectura. Los cambios que tildes desde el celular aparecerán después de la próxima sincronización.
-
-## Activar la sincronización de Notion
-
-La web es pública, así que el contenido de “Día” que aparece en ella también será visible para cualquiera que conozca el enlace. Para conectar la lista, se necesita crear una integración de Notion con permiso de lectura, compartir únicamente esa página con la integración y guardar su clave en GitHub como secreto `NOTION_TOKEN` (Settings → Secrets and variables → Actions). No copies la clave en el código ni en un mensaje. Hasta que se configure, el sitio sigue funcionando y la tarjeta indica que falta activar la conexión.
 
 ## Para mantenerlo en pantalla
 
