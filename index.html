@@ -99,8 +99,9 @@
       border-color: var(--line); background: var(--surface);
     }
     .weather-card .eyebrow { color: var(--ash); }
-    .weather-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-    .city-name { margin-top: 5px; color: var(--paper); font-size: clamp(13px, 1.08vw, 18px); line-height: 1.22; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+    .weather-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 10px; }
+    .weather-top > div { min-width: 0; }
+    .city-name { margin-top: 5px; color: var(--paper); font-size: clamp(13px, 1.08vw, 18px); line-height: 1.22; white-space: normal; overflow-wrap: anywhere; }
     .city-change { padding: 3px 0; border: 0; border-bottom: 1px solid rgba(145,203,208,.62); background: transparent; color: var(--accent); cursor: pointer; font-size: 10px; white-space: nowrap; }
     .city-change:hover { color: var(--paper); border-color: var(--paper); }
     .weather-now { display: flex; align-items: center; gap: 15px; }
@@ -164,7 +165,7 @@
       .weather-card { padding: 12px 18px 14px; gap: 5px; }
       .clock { font-size: clamp(56px, 7vw, 94px); }
       .greeting { margin-top: 7px; }
-      .city-name { font-size: 13px; -webkit-line-clamp: 1; }
+      .city-name { font-size: 13px; }
       .weather-icon { width: 40px; height: 40px; }
       .temperature { font-size: 46px; }
       .weather-desc { margin-top: 2px; font-size: 11px; }
@@ -239,7 +240,6 @@
   <div class="screen">
     <header>
       <div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m4.5 10 7.5-6 7.5 6v9.5h-15V10Z" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/><path d="M9.5 19.5v-6h5v6" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/></svg></div><div><h1 class="brand-title">Vitto Hogar</h1><div class="brand-caption">Tu día, de un vistazo</div></div></div>
-      <div class="top-actions"><button class="soft-button" id="fullscreenButton" type="button"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 3.5H3.5V7M13 3.5h3.5V7M3.5 13v3.5H7M16.5 13v3.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Pantalla completa</span></button></div>
     </header>
 
     <section class="hero" aria-label="Hora, clima y pronóstico local">
@@ -509,12 +509,6 @@
           loadWeather();
           loadNews();
         }
-      });
-      $('fullscreenButton').addEventListener('click', async () => {
-        try {
-          if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
-          else await document.exitFullscreen();
-        } catch (_) { notice('Usá la opción de pantalla completa del navegador.'); }
       });
     })();
   </script>
