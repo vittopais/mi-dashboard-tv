@@ -122,6 +122,11 @@
     .news-loading { grid-column: 1 / -1; display: flex; align-items: center; padding: 9px 13px; border: 1px solid var(--line); border-radius: 14px; background: rgba(24,36,55,.58); color: var(--muted); font-size: 12px; }
     footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: rgba(184,199,220,.65); font-size: 9px; }
     footer a { color: inherit; text-underline-offset: 3px; }
+    @media (min-width: 901px) and (max-height: 900px) {
+      .news-item { padding: 6px 9px; }
+      .news-title { font-size: clamp(10px, .86vw, 12px); line-height: 1.2; }
+      .news-source { margin-top: 3px; font-size: 8px; }
+    }
     .status { position: fixed; z-index: 20; left: 50%; bottom: 22px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; border: 1px solid var(--line); border-radius: 12px; background: #263b55; padding: 11px 16px; color: white; transition: .2s; font-size: 13px; }
     .status.show { opacity: 1; transform: translate(-50%, 0); }
     .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 10; align-items: center; justify-content: center; padding: 20px; background: rgba(5,10,18,.78); backdrop-filter: blur(7px); }
