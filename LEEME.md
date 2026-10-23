@@ -1,4 +1,4 @@
-# Mi casa · Panel para la tele
+# Vitto Hogar · Panel para la tele
 
 El panel está publicado gratis en GitHub Pages:
 
