@@ -85,15 +85,15 @@
     #radarMap { position: absolute; inset: 0; z-index: 1; background: #dce2d8; }
     .radar-location { position: absolute; z-index: 2; top: 8px; left: 8px; max-width: calc(100% - 16px); overflow: hidden; padding: 5px 8px; border: 1px solid rgba(28,42,57,.1); border-radius: 9px; background: rgba(250,251,246,.88); color: #263a46; font-size: 10px; font-weight: 750; text-overflow: ellipsis; white-space: nowrap; box-shadow: 0 2px 8px rgba(15,30,36,.12); pointer-events: none; }
     .radar-location::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: #ed715e; vertical-align: 1px; }
-    .radar-controls { display: grid; grid-template-columns: 34px minmax(40px,1fr) 46px; align-items: center; gap: 9px; min-height: 28px; }
-    .radar-play { width: 32px; height: 30px; display: grid; place-items: center; border: 1px solid rgba(190,209,235,.2); border-radius: 10px; background: rgba(255,255,255,.06); color: #f4f7fb; cursor: pointer; font-size: 13px; }
+    .radar-controls { position: absolute; z-index: 3; right: 8px; bottom: 8px; left: 8px; display: grid; grid-template-columns: 34px minmax(40px,1fr) 46px; align-items: center; gap: 9px; min-height: 36px; padding: 3px 7px; border: 1px solid rgba(28,42,57,.12); border-radius: 12px; background: rgba(250,251,246,.9); box-shadow: 0 2px 10px rgba(15,30,36,.12); }
+    .radar-play { width: 32px; height: 29px; display: grid; place-items: center; border: 1px solid rgba(28,42,57,.15); border-radius: 9px; background: #344a58; color: #f4f7fb; cursor: pointer; font-size: 13px; }
     .radar-play:hover { background: rgba(255,255,255,.13); }
     .radar-timeline { width: 100%; height: 22px; margin: 0; accent-color: #70d2cf; cursor: pointer; }
-    .radar-time { color: #e5edf7; font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
+    .radar-time { color: #263a46; font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
     .radar-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 9px; }
     .radar-credit { color: #c8d6e7; text-underline-offset: 2px; white-space: nowrap; }
     .radar-credit:hover { color: var(--cyan); }
-    .radar-attribution { position: absolute; z-index: 3; right: 5px; bottom: 4px; padding: 2px 4px; border-radius: 4px; background: rgba(250,251,246,.78); color: #30444f; font: 8px/1.2 Arial,sans-serif; }
+    .radar-attribution { position: absolute; z-index: 3; top: 8px; right: 8px; padding: 3px 5px; border-radius: 5px; background: rgba(250,251,246,.82); color: #30444f; font: 8px/1.2 Arial,sans-serif; }
     .radar-attribution a { color: inherit; text-decoration: none; }
     .agenda-bar { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 9px 13px 9px 17px; border: 1px solid var(--line); border-radius: 16px; background: rgba(24,36,55,.88); }
     .agenda-heading { min-width: 105px; }
@@ -207,11 +207,11 @@
           <div id="radarMap" role="img" aria-label="Mapa de radar de lluvia para la ubicación elegida"></div>
           <div class="radar-location" id="radarPlace">Buenos Aires</div>
           <div class="radar-attribution">Mapa y radar: <a href="https://www.rainviewer.com/" target="_blank" rel="noreferrer">RainViewer</a></div>
-        </div>
-        <div class="radar-controls">
-          <button class="radar-play" id="radarPlay" type="button" aria-label="Pausar animación del radar" title="Pausar / reproducir">Ⅱ</button>
-          <input class="radar-timeline" id="radarTimeline" type="range" min="0" max="0" value="0" aria-label="Recorrer imágenes recientes del radar">
-          <span class="radar-time" id="radarTime">--:--</span>
+          <div class="radar-controls">
+            <button class="radar-play" id="radarPlay" type="button" aria-label="Pausar animación del radar" title="Pausar / reproducir">Ⅱ</button>
+            <input class="radar-timeline" id="radarTimeline" type="range" min="0" max="0" value="0" aria-label="Recorrer imágenes recientes del radar">
+            <span class="radar-time" id="radarTime">--:--</span>
+          </div>
         </div>
         <div class="radar-foot"><span id="radarUpdated">Imágenes de las últimas 2 horas</span><a class="radar-credit" href="https://www.rainviewer.com/" target="_blank" rel="noreferrer">Radar RainViewer ↗</a></div>
       </section>
