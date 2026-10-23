@@ -1,104 +1,52 @@
 {
-  "updated_at": "2026-10-23T13:56:09+00:00",
+  "updated_at": "2026-10-23T17:45:52+00:00",
   "categories": {
     "argentina": [
       {
-        "title": "La Fuerza Aérea Argentina participó de la 8° Jornada de Ciencia, Tecnología, Innovación y Desarrollo - Argentina.gob.ar",
-        "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQWmpLMUdNMjI4cmstNmYyOWl4RmFkdjJCSUlYMnd3QzRmWUlUMm8yVFV1NTRJdnJucHNxTEd1RnpURHRzd2JIOUxxaFlNbi1pc293OTFSQVBtY21HOUxtUjUwdlU0eXFGZ19CMWJjR0lVRG9rS09pVG1LaEIyOFJ2cGt5YjBPT2lSZHZ0OG9HTVJDMnFMUWtVUFFVcng2Unp6ODJFQWxPZUp3YnBUQjExWFBsdHU4VGMxcUNzbjlhN2UtQjgtVlE?oc=5",
-        "author": "Argentina.gob.ar",
-        "pubDate": "Fri, 23 Oct 2026 11:36:33 GMT"
-      },
-      {
-        "title": "Daniel González renunció a la Coordinación de Energía y Minería de Argentina: “Lo hablamos con Caputo desde hace meses” - Energía Estratégica",
-        "link": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxQaVlGOV9oU2w1cjNTT2tRSTBHbzlxX0dqMlNySl9XaFdVWGpRUndWSm9tblc5b3M3Y25ENUI2LWZjWDBvclNaWGc3cDBkejJScHIxdjIza1dGNUFzWFZQQkEyVktzZFRPZHNpUF8xMFlvWFl1RUtpRDEyeXN6anRYdU90eDFncWJHWjZKbk9IdjJnemZiQUJLU2RSNFhFUVBaTndFTUV0ZXhOSm5abTF1XzFlYmZNV3ZQbWRQWUtmSThhSk45RVBUVG02TVplOEVQVF9XRWZvYTlXLXZQMWFNOE95UXRWdkg3dVBLbUN1UHY1UQ?oc=5",
-        "author": "Energía Estratégica",
-        "pubDate": "Fri, 23 Oct 2026 13:27:40 GMT"
-      },
-      {
-        "title": "El Niño, en el centro de la escena: riesgos y desafíos para Argentina - Greenpeace",
-        "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNc0V5cElRbTV5b3FwTm5sdi1RS3dNdGxtbFk3bXFKT24ySHFIaVJqSjAxRmIta1ZJaU5JTHVVRVR4MEtxaV9aRVBiOVlaY2ptOTR6bG9xOWRFUU1ObGdnSDRMODBjYWI4WUI4enFVTU9aUWpTMzRSWEV4a3U1S2Q1bXpxbU9sUjZYX3BFREV5N2tGcURkbVNJVVdyWXBqdGczZG5ndHVoby1VUEVGSG1XZWFrY2RVY0dVNWozcnBkbmVSdmEtT0hLbkVMODhzdEk?oc=5",
-        "author": "Greenpeace",
-        "pubDate": "Fri, 23 Oct 2026 10:42:50 GMT"
+        "title": "Alerta demográfica en Argentina: “En 10 años se acaba el bono para cambiar la economía” - Radio del Plata",
+        "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBjSEExTkJud1BPa3RXX3dlYnlNbTBxMDVzalRyOEQxTDhtVDNoNkh0X0wwRGVjMm8tcWFTUGsxZGtRWko4SU1rYUNfTEJpazBxODF2VS05ajhvRjJUMjRxVVBILTlvU2VSSllibEdKa0w2RnFNci1fQnBUZ3BCUms?oc=5",
+        "author": "Radio del Plata",
+        "pubDate": "Fri, 23 Oct 2026 17:22:02 GMT"
       }
     ],
     "mundo": [
       {
-        "title": "La Ciudad recibirá un encuentro nacional e internacional sobre ecología urbana - Municipalidad de la Ciudad de Mendoza",
-        "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPZVljSW1DYTU5a2hSNl8xd0hmUTRGWjZHOHZpRzVHbEdNVXE3UVc1enVKdVRjYkNqakIxbW13ejg0MTIyV2pnLTdJaGJfdy1xUGFOV3ZtNFlGTGEtUDdWbkcxcS1IbDR0a0ktNzJlMXFKdnZLeVZQeGx0SjBqR3N3am9PSUh4YV84VFVjRWNaWk00OEVPVzRveXR6OEFvU21Xa1lWWVhmYlRNUFlBajVrRDNncTdiT0Q1X0J2WlpDanhlUkJ1dUNr?oc=5",
-        "author": "Municipalidad de la Ciudad de Mendoza",
-        "pubDate": "Fri, 23 Oct 2026 12:53:03 GMT"
-      },
-      {
-        "title": "Jornada Comex 2026 reunirá en Córdoba a destacados especialistas en economía y comercio internacional - ProCórdoba",
-        "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQSHZpczVfbzdoYkk5QlJPTllkbGxHcUE1bG1SRGlKbDVTSTE5UG50YjVDckNyNlJvWFo0NVdZN01NZUhTc3FfRUk2Vm5aQ2xVV0JOclc5Rm5OQXE4ZkhFRjhTdGhjZjVDUk5PZXF6WG1wenBXUTNyV0dUZWloN3V2TnVFZWVGeXpZV3lGX0ZxTlR4QkxpcUxzbklQc2tzeUpHT1dMLUtjZDNlX0NTOGRiSmR4T3lnMm1aZ1BHUlFLQkFvbGs?oc=5",
-        "author": "ProCórdoba",
-        "pubDate": "Fri, 23 Oct 2026 13:53:41 GMT"
-      },
-      {
-        "title": "Inauguración del China Zorrilla de Buquebus: tecnología noruega en el buque eléctrico más grande del mundo - Norgesportalen",
-        "link": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxPOVRtUG9vNXpySTFhRUVISm83SFUzVmZyVnV2bmFwMldKZ2FPYno0VzRFa1ZGb2s0dUxVb2M2NUZheXpZQWNTNXhJR2xVRUo2M0tHUTJjYks2UUhjMmcwaV9aYlN4clBCYU5WWVppTmZZZVVlMnlPRjhUTlU3aWlrbGZyT0dCNW8zaGZLUm1PNnlycWM5dmpMdHlGZkFJSURsQ3JMTVp4ZUxlTXg4SVlaSU1sMUJpSEp6bWdHZjhwWjEtUnpaSVRmZTNRaGJjVzg4TWRWdWhYUFl2em9vUW9TSWR4clN2djZ4Nk9UVzczNWhGdU54NGJnaGFPLWE?oc=5",
-        "author": "Norgesportalen",
-        "pubDate": "Fri, 23 Oct 2026 12:30:43 GMT"
+        "title": "Francia investiga como \"terrorismo\" un tiroteo mortal cerca de París - BBC",
+        "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1Zc1NPU2h1V3JGZ1R6R2NwdlhzTUlkcW1GNGJsV3NjaGxYZUVmRTNaM1lVZklWUk9wN1M2WGsta3YyT2QtakdYS2N1UFpxSFpMcWJaelVDM0JUSW8yWF9xSW530gFiQVVfeXFMTVlzU09TaHVXckZnVHpHY3B2WHNNSWRxbUY0YmxXc2NobFhlRWZFM1ozWVVmSVZST3A3UzZYay1rdjJPZC1qR1hLY3VQWnFIWkxxYlp6VUMzQlRJbzJYX3FJbnc?oc=5",
+        "author": "BBC",
+        "pubDate": "Fri, 23 Oct 2026 16:40:15 GMT"
       }
     ],
     "economia": [
       {
-        "title": "Las reformas económicas de Milei están bajo presión: la advertencia del Financial Times sobre la economía argentina - Filo News",
-        "link": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxQWG1xQ2F2Q0lLRkZyRDdlZ25vcXJZMWFyOXVCQVhmbHNNQWdWODBUMnlmUXVYNjNnUDd3U2NOUHUtR19FWHgwaTN2NWJPeXowOGNTM21jQjlGT0dWUzY1dGVqcWh5cl9SRWN3YnY2czF6RGdfXzJzVTRiMnRudnBQWnpHOVV2T2ZTMnZLdVhIUm9TdmU0NEg4VzZxeld5SzhhWG5LaDU4S1FuQnc5YV9oeE9hVnZSbkNZOWdoNXg5UGQ0dzRKTUVzVWlPUmJYLWFwSWRFQXd0bV80VE1MbF92MnJOYWtGTWQ4UDJJ?oc=5",
-        "author": "Filo News",
-        "pubDate": "Fri, 23 Oct 2026 13:17:00 GMT"
-      },
-      {
-        "title": "El consumo sigue en caída libre y explica parte del proceso recesivo de la economía argentina - Perfil",
-        "link": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPZ05iVzBOXzBpdDdMQTNiel9IUl96WGIzOV9TbDJIZ19ablpIbUlKZXI4QlZoTjdPSWxyeW9FT2tiRFNURTdSX2xOdzZ0NUNld0hIREdpenFISlhESTlEbXJGWTI5eDB4cHRJLTZJWncwdDJRZ3NWNGpidXRpMktiMjdLRTFrX0twWVlySFhPVFFXNFd0QTF6VmRSV0J6XzhlU0p5a2F1eTNBNUczbVBQVmtlRHJVOWdUYV9iWUhweUtUOWhXQ1FVTWRHT1lqV0czOUZxVW5nN2JZeURw0gHiAUFVX3lxTE51STQ2aDBKc2M4Wjc1aXlQNjNEUkNYME92aHRQX2ZoWG1pdmt6SUEwVktOdmZzb2NNOGNMd0ZhZVlsVWUydVg3RG9yZm1aWFBKVjFrS1pGWTdZWUhfWUtxd1IwdkZmM2RuS1BCdW1ETkQ4d2g3SXF2ZlN5bVZIMmQxOGFKS3NDMmI4U21ZR2Nvbjg3enRTckdhRy1ZRlI2eWdHZThnOUJ0MjZwX3VLZVUzczhxbXVrWUJTTzVXQVF5YjZ0SGRQNXRySGVHVGF6Mm9GYlFKVGx0YVd1eUFJUXNfY2c?oc=5",
-        "author": "Perfil",
-        "pubDate": "Fri, 23 Oct 2026 08:30:00 GMT"
-      },
-      {
-        "title": "La economía argentina, en riesgo de recesión: crece la preocupación por el segundo semestre tras el dato de agosto - Forbes Argentina",
-        "link": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxQb2hGVHVjd0tNRGY0MHYyVWs5RXV6R2NxLVBWMU9fVC1CYndzdTRPcXZuMUxUMmhDQnRndkc1WVFxQU5tekhhZ1RvWTNRSjk2OTk1aERfUzdoOVZsQld3NURSY0M2NFRGaUhBYjJuaGE1dERvdHZJYmtRTEs4RjFqTm9NX3U3S2tCZXptT21DX2VYTTFnQkFZUTRWWWVBSG5odlcyVE5yRHdiU3Q2dFBkVWxicVV5cGNXZl9vdmlscmFFdUZ6aFdldHdnQ1IxdUhDYjZ0SFVyeTd1M3hQ0gHiAUFVX3lxTE1ObThmU2QxVFVRdjdBRExsUWozNHd5ay1jbDVVMW9iVTRrRUFocGtTcWV3eUJCQWFJRVNWSHR6RFYyRi1sa0U5TW40cm1ZLWdodERERnAzX3BrZG1vcXZ0ZUdHSWpUbVpvQzVrMVFuRjFVdGticlBhZkVTaUpOUTJYbUZQSXJncXV6UDZoYkYzazVaTjRLbnVGODFna28wdEYtNDNmUm4zLXRHSFhLeTVCR3B0OExGNFZPWGpYbGhlbkFKenczNWJNa0pRR2xNemFKaENVdzd1ZHk1MkNvMTZxN2c?oc=5",
-        "author": "Forbes Argentina",
-        "pubDate": "Fri, 23 Oct 2026 10:14:00 GMT"
-      }
-    ],
-    "politica": [
-      {
-        "title": "Javier Milei se reunirá con un alto funcionario de EE.UU. en plena discusión por la causa Malvinas - TN",
-        "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNUHRNQWdQc1lHRWlIRUl5TVJTZkhUWjdFWjNXOFpJbm1CcEkzV0RwdW04TXljclFCZUdCVkxvSC1tckhacExHTVBfeTZrdkc1YmZsMFlJbGZ1QUtKdVdlOVQ1RXpOV00wYlBZcGI5eUJ4azFXZ29kaEk0dm41RmZjVmhhMUVCMVJLUVhtT0xoRHY3VUpyWnZsOHlHVWh0Sm02dFNHUmdEbHJPNUtrQThqc2w3emc2dS1JWkktbVJTR0xVa2Z3OGJWenlFVmVkQkdo0gHkAUFVX3lxTE1oM2lxQTZmTlAwMlFKNHZFLWVpXy1yYjhBMzdBNnBuQURENzFvT08tZE8wQmZVcDVnbDg4b1BVNTk5aDhjYjduRmNocWIyN1ZqMUZVdUFqeDA5Y1IzaW9jbS1zaGNMQmFhMGw1Q2lBejU1Y3pKekIwVUVOaGhtQXE2QWRvOEc0NjZNaDUwNDVtTVlxa3JCUWJMMkM0cExOUEpOMG1uZ1AwTzdlVFVaazFtLXRMUWVpVG5Ud1BmX1dfdzgwaDF0U09vQm5QR1RVM2hOdnJUZm9Nb2dKeU13NFgzWEtqaA?oc=5",
-        "author": "TN",
-        "pubDate": "Fri, 23 Oct 2026 09:00:00 GMT"
-      },
-      {
-        "title": "Grabois y Kicillof cerrarán un foro para discutir el programa del próximo gobierno - La Noticia Web",
-        "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOOFVUWWdrX1RNTTJvc3FNSkNHM0VZZUh0eU1zaGk2cEtwTDdSS3l4dF85NzZmYkg3bHZaSzlYampoVk1sYkNiS09OUkxGeG1tRlNNYXlvQi01Q2hRc1I3aWN0MURPb3JTblVOaXVOZE9ydlZaUzBNSlQ5ZnpxS2pfV1JfU0s5NTBIRDBpOWZkUEVEaXJJd045My1yNmoxZFJYSkhGZ1c4d2NuSXo1SE5WU24wYXIyZw?oc=5",
-        "author": "La Noticia Web",
-        "pubDate": "Fri, 23 Oct 2026 12:33:45 GMT"
-      },
-      {
-        "title": "El viaje de León XIV a la Argentina: tras el guiño del Papa, aceleran los preparativos, sin recorte de actividades - Infobae",
-        "link": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxNQ2k5cS1iYVpOblhPODY4amtsbXVPcE1BdGo3WS0zZHA4emc2em43eVU4Vlp3MDFQaEFUdWlkU1g5R0hXVmFmREF4amdYcDhzSkxFOUhQVlZTMmFlQ1hXWVB1NUdubldvS1UtOUM0b0dlX3loQnJnNEJEeTZsTE9vcG9aY3AzYUpzWUp5NWxUTkZfWWRvWTh5WW1hV0o2QW16V2FPRThhZkNKSGxQSWUzNmZFRVcxMWs2RFM4MWp2Rkt5VjNhc0Rnc2RqS2RESVYwRTR4R0pDMy12ak51NWQxa0lGeW91cGNRNEVDedIBhwJBVV95cUxQbkJlNEdhcGZwel9wZ21NNHVzNVJQQXZjQVItRzVFV3RCR2stWUFmTjFiWkdvSlBWc0xkQUx5WEFuMFBVblFyWFJyb1IzVi1oaG5xUVJiXzBOa2JITnNtN3FtWW9yenZET2ZzclVKdTZqb2RUNkxpXzFkMHhpWHE2Q3B4YnpITFVuVlQwNzJ4ZlljVDR5bUxwVTFXa01ubDRNYVAya1lRbklFT2hwYU9yVHJtOFUxZGtMZXlpM3VZTVgzcjRubFBSbWl6aHJ5ZktUd3lETmpTNDRpMGJsQU52SXN5cHpDaF9aekJjV3lxV0ZWcWlvQ2F4VnpEeVRxWnRiUlVLLUhSYw?oc=5",
-        "author": "Infobae",
-        "pubDate": "Fri, 23 Oct 2026 11:13:00 GMT"
+        "title": "Financial Times: Milei, economía estancada y sombría - LA17",
+        "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOSnhMc200bm5GYnE2WVdKdjBDMGt0aVlkU0hpaFZUaDcweXc5OW5nUVY3cnR6YlpLcE1qZ3RYdWM3Tk5JMkpaWnJQLThLMlFZM3FSZXdlSU40ZFc1MmxKcVlnZWNzLTVmVnRHZXYtRXFYRzAyV3kwQTZJMk44NWYwRmExTVVkMWhyNFhpcGhmU0tuMGZIZ0RQZUJqNEx6UldNQWJGLW10ZkJ3VlV4N2pndXlkN1RTbjU4bDN3c01UcEtCbl9D?oc=5",
+        "author": "LA17",
+        "pubDate": "Fri, 23 Oct 2026 16:05:00 GMT"
       }
     ],
     "ciencia": [
       {
-        "title": "III Jornada de Tecnología y Salud en el ITBA - ITBA | Instituto Tecnológico de Buenos Aires",
-        "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9rNTB1QWN4NnNVaVlwd3R2QVA1S2ZJSkx5VTREQlY2elcxTXNycndCYTN1enNHQzFUNV9yeEp3ZmxMQzZLN0U4RFl4QjFhMThZbGl3REIxV0drYjNYZFJEemdQM0pkRFE3OUR6dVFwaHZITFhQcjktNQ?oc=5",
-        "author": "ITBA | Instituto Tecnológico de Buenos Aires",
-        "pubDate": "Fri, 23 Oct 2026 12:57:35 GMT"
-      },
+        "title": "Amina Helmi, la científica argentina que recibió el \"Nobel de astrofísica\" por encontrar los restos de la última gran fusión de la Vía Láctea - BBC",
+        "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5ySHlwMDRRclc4eFNMaHhDTkVMc1g2N29lT1Q4U0R2d1JLSmZiYWhxeEppZkNyOWFNLUFmaEtSOEx6NlZrOWhFOWp0NE0zRTRPVTRwTzdURHNCNW950gFiQVVfeXFMTzV0U2Z1eGNPMzFleUtVeXlELXpWMnFZM1FKcmJ3UTAyUVEwa0FJNUJVSGVJdjY2Y0ZnMkh3LUpiQnhRelhhcmR2ckhDU3hseFZEaXZFcDR4ZU50ektBUUtCYWc?oc=5",
+        "author": "BBC",
+        "pubDate": "Fri, 23 Oct 2026 10:25:14 GMT"
+      }
+    ],
+    "tecnologia": [
       {
-        "title": "La Fuerza Aérea Argentina participó de la 8ª jornada de Ciencia, Tecnología, Innovación y Desarrollo - Noticias En Vuelo",
-        "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE1Id1VNN3Z4cmJyX3h3dlJfN2JQTFJna055dXUtT1ZIMHptU1FicnV2MHFmZ0dkSy1ZeWxvZzRJVC1zUk9BY2NoZUt3bE1TZnVaUlUxcmhTcUNMb2RMSFdVWjVOVjUxenc4T0VYZDVNcjMxQQ?oc=5",
-        "author": "Noticias En Vuelo",
-        "pubDate": "Thu, 22 Oct 2026 23:34:23 GMT"
-      },
+        "title": "Colombia supera los 49 millones de accesos a Internet móvil: así crece 5G - ENTER.CO",
+        "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNTjBaSVMxV1hJS3BuOVl6RUVSLWRqUXEwdl9PRWczNWdoM05LLWVnM1JJYnpXSzY3ajhHdG45b1VtQnVwSE5ZY1ZJa1ZaNWRoclc5RUxoaS01TGFFQ2YxZkJSUGtZejFJb0JjU1JiODJuMDl4bEp4TnFWTXBhV1FTUkhOWEN6dXJ0VnJrVTNVcVExYlIxMGh1bmlveXVwNmFKWmpMbDFB?oc=5",
+        "author": "ENTER.CO",
+        "pubDate": "Fri, 23 Oct 2026 16:20:03 GMT"
+      }
+    ],
+    "ia": [
       {
-        "title": "Escuelas, industria y tecnología: qué dejó la tercera edición de Innovatech Expo en Ituzaingó - Primer Plano Online",
-        "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPR1c2Z2NoM0V0TGtjQ05vNkhFMU0wa1Nmb0IxLUE5T09UTDJBazVlQUs1clo4RVJraFpXUTR6OXhXSG9MQ0xmenRsUkhqUDVQQlE1ZWE0cGRnNTI4Z29Pd29RcEFUYnZMZkw4MllDU3E5SXROLUpnank1ZjJSOTB5Nk8zb2IzeDdCUTU5ZENKYmdtVVJmNUtfQ0E2bGVOajV0bXVDWDJjVUdyR2g4RFU4eU00Yy13MXdYeXpobnZjQzBrOTg?oc=5",
-        "author": "Primer Plano Online",
-        "pubDate": "Fri, 23 Oct 2026 11:07:58 GMT"
+        "title": "LitPivot: la herramienta de Ai2 que revisa tus ideas - El Ecosistema Startup",
+        "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNQ21QSHhHMTJyOV94TGFxRm1PakhEdjEzX2p1UzE0eVlzNEFkN0QwLXNjdlVkLVozeWE4TWNWNXBRYWxqVThIQzA4VWpBODlYa05MWk12UzY3VHIxLWpkQ0l2TG82ZC1mdWhYT3RaLXR4WUNWeHVLanJBdXMtN0VOT2FLM2JWSXZJVUE?oc=5",
+        "author": "El Ecosistema Startup",
+        "pubDate": "Fri, 23 Oct 2026 16:36:44 GMT"
       }
     ]
   }

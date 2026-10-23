@@ -9,6 +9,7 @@ import subprocess
 import urllib.parse
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 
@@ -16,10 +17,11 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "news.json"
 FEEDS = {
     "argentina": "Argentina when:1d",
-    "mundo": "mundo OR internacional when:1d",
+    "mundo": "site:bbc.com/mundo internacional when:1d",
     "economia": "economía Argentina when:1d",
-    "politica": "política Argentina when:1d",
-    "ciencia": "ciencia tecnología when:1d",
+    "ciencia": "astronomía descubrimiento ciencia when:1d",
+    "tecnologia": "tecnología empresas internet when:1d",
+    "ia": "inteligencia artificial investigación when:1d",
 }
 
 
@@ -56,8 +58,18 @@ def fetch_feed(query: str) -> list[dict[str, str]]:
             items.append(
                 {"title": title, "link": link, "author": source.strip(), "pubDate": pub_date}
             )
-        if len(items) == 3:
-            break
+            if len(items) == 15:
+                break
+    def published_timestamp(item: dict[str, str]) -> float:
+        try:
+            published = parsedate_to_datetime(item["pubDate"])
+            if published.tzinfo is None:
+                published = published.replace(tzinfo=timezone.utc)
+            return published.timestamp()
+        except (KeyError, TypeError, ValueError, OverflowError):
+            return 0
+
+    items.sort(key=published_timestamp, reverse=True)
     return items
 
 
@@ -68,15 +80,39 @@ def main() -> None:
     except (OSError, json.JSONDecodeError):
         categories = {}
 
+    used_links: set[str] = set()
+    used_titles: set[str] = set()
+
+    def remember(item: dict[str, str]) -> None:
+        used_links.add(item.get("link", ""))
+        used_titles.add(" ".join(item.get("title", "").lower().split()))
+
+    def remember_previous(category: str) -> None:
+        previous = categories.get(category, [])
+        if previous:
+            remember(previous[0])
+
     for category, query in FEEDS.items():
         try:
             items = fetch_feed(query)
-            if items:
-                categories[category] = items
-                print(f"{category}: {len(items)} titulares")
+            selected = next(
+                (
+                    item
+                    for item in items
+                    if item["link"] not in used_links
+                    and " ".join(item["title"].lower().split()) not in used_titles
+                ),
+                None,
+            )
+            if selected:
+                categories[category] = [selected]
+                remember(selected)
+                print(f"{category}: titular más reciente")
             else:
-                print(f"{category}: sin resultados nuevos; se conservan los anteriores")
+                remember_previous(category)
+                print(f"{category}: sin noticia distinta; se conservan los anteriores")
         except Exception as exc:  # Keep the last good snapshot if a feed is temporarily unavailable.
+            remember_previous(category)
             print(f"{category}: no se pudo actualizar ({exc}); se conservan los anteriores")
 
     payload = {

@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, master]
   schedule:
-    - cron: '7,22,37,52 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -25,6 +25,11 @@ jobs:
     steps:
       - name: Descargar el sitio
         uses: actions/checkout@v4
+      - name: Sincronizar la lista de Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_PAGE_ID: 3c469f67-1772-804e-b4ca-ca5758a2b944
+        run: python3 scripts/sync-notion.py
       - name: Obtener titulares actuales
         run: python3 scripts/update-news.py
       - name: Preparar GitHub Pages
