@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vittopais.github.io/mi-dashboard-tv/sitemap.xml

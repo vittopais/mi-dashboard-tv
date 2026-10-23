@@ -4,6 +4,8 @@ El panel está publicado gratis en GitHub Pages:
 
 **https://vittopais.github.io/mi-dashboard-tv/**
 
+El sitio está abierto al rastreo de buscadores y publica un sitemap. Que aparezca en los resultados depende de Google: rastrear e indexar puede tardar y no se garantiza de inmediato.
+
 Incluye reloj y fecha de Argentina, clima local y pronóstico de cinco días, un mapa meteorológico animado centrado en Capital Federal y con el norte y oeste de la provincia de Buenos Aires alrededor, agenda y titulares en cinco secciones.
 
 ## Abrirlo en la Sony
