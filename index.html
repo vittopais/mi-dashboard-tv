@@ -24,7 +24,7 @@
     }
     :root {
       color-scheme: dark;
-      --bg: #222326;
+      --bg: #292A2D;
       --surface: #393B3F;
       --slate: #55575B;
       --ash: #A6A8AB;
@@ -34,17 +34,14 @@
       --line: rgba(166, 168, 171, .23);
       --line-soft: rgba(166, 168, 171, .14);
       --line-strong: rgba(241, 240, 236, .31);
-      --accent: #d0d0cf;
+      --accent: #91cbd0;
     }
     * { box-sizing: border-box; }
     html, body { width: 100%; height: 100%; margin: 0; }
     body {
       overflow: hidden;
       color: var(--text);
-      background:
-        radial-gradient(ellipse 54% 56% at 8% 0%, rgba(85,87,91,.30), transparent 72%),
-        radial-gradient(ellipse 42% 54% at 100% 100%, rgba(85,87,91,.17), transparent 75%),
-        var(--bg);
+      background: var(--bg);
       font-family: "Dashboard Inter", Inter, "Avenir Next", "Segoe UI", Roboto, Arial, sans-serif;
       font-synthesis: none;
       -webkit-font-smoothing: antialiased;
@@ -64,8 +61,8 @@
     .brand { display: flex; align-items: center; gap: 12px; }
     .brand-mark {
       width: 40px; height: 40px; display: grid; place-items: center; border-radius: 14px;
-      color: var(--paper); background: linear-gradient(145deg, #55575B, #393B3F);
-      border: 1px solid var(--line-strong); box-shadow: inset 0 1px rgba(241,240,236,.13), 0 6px 18px rgba(0,0,0,.16);
+      color: var(--accent); background: var(--surface);
+      border: 1px solid var(--line-strong);
     }
     .brand-mark svg { width: 19px; height: 19px; display: block; }
     .brand-title { margin: 0; font-size: 13px; font-weight: 720; letter-spacing: .17em; text-transform: uppercase; }
@@ -73,7 +70,7 @@
     .top-actions { display: flex; gap: 8px; align-items: center; }
     .soft-button, .icon-button {
       border: 1px solid var(--line-strong); border-radius: 999px;
-      background: rgba(57,59,63,.72); color: var(--text);
+      background: var(--surface); color: var(--text);
       cursor: pointer; transition: background .2s, border-color .2s, transform .2s;
     }
     .soft-button { display: inline-flex; align-items: center; gap: 8px; padding: 9px 15px; font-size: 12px; }
@@ -83,56 +80,59 @@
     .card {
       min-width: 0; min-height: 0; overflow: hidden; position: relative;
       border: 1px solid var(--line); border-radius: 21px;
-      background: linear-gradient(145deg, rgba(57,59,63,.98), rgba(48,49,52,.98));
-      box-shadow: 0 18px 42px rgba(0,0,0,.24), inset 0 1px rgba(241,240,236,.08);
+      background: var(--surface);
     }
-    .card::before { content: ''; position: absolute; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(241,240,236,.22), transparent); pointer-events: none; }
+    .card::before { content: none; }
     .eyebrow { color: var(--ash); font-size: 10px; font-weight: 680; letter-spacing: .18em; text-transform: uppercase; }
     .clock-card {
       grid-column: 1; grid-row: 2; padding: clamp(18px, 2.2vw, 36px) clamp(22px, 2.8vw, 48px);
       display: flex; flex-direction: column; justify-content: center;
-      background: radial-gradient(ellipse 70% 120% at 0 0, rgba(85,87,91,.26), transparent 76%), linear-gradient(145deg, #393B3F, #303135);
+      background: var(--surface);
     }
-    .clock-card::after { content: ''; position: absolute; right: 0; top: 17%; bottom: 17%; width: 1px; background: linear-gradient(transparent, rgba(241,240,236,.2), transparent); }
+    .clock-card::after { content: none; }
     .clock { margin: 8px 0 5px; font-size: clamp(78px, 9vw, 148px); line-height: .98; letter-spacing: -.055em; font-weight: 380; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .date { color: var(--paper); font-size: clamp(16px, 1.55vw, 23px); font-weight: 420; }
     .greeting { margin-top: 13px; color: var(--muted); font-size: clamp(11px, .92vw, 14px); letter-spacing: .015em; }
     .weather-card {
       grid-column: 2; grid-row: 2; padding: clamp(14px, 1.55vw, 25px) clamp(16px, 1.9vw, 30px) clamp(16px, 1.8vw, 28px);
       display: flex; flex-direction: column; justify-content: space-between; color: var(--text);
-      border-color: var(--line); background: linear-gradient(145deg, rgba(57,59,63,.99), rgba(47,49,52,.99));
-      box-shadow: 0 18px 40px rgba(0,0,0,.22), inset 0 1px rgba(241,240,236,.1);
+      border-color: var(--line); background: var(--surface);
     }
     .weather-card .eyebrow { color: var(--ash); }
     .weather-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
     .city-name { margin-top: 5px; color: var(--paper); font-size: clamp(13px, 1.08vw, 18px); line-height: 1.22; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
-    .city-change { padding: 3px 0; border: 0; border-bottom: 1px solid rgba(241,240,236,.35); background: transparent; color: #d0d0cf; cursor: pointer; font-size: 10px; white-space: nowrap; }
+    .city-change { padding: 3px 0; border: 0; border-bottom: 1px solid rgba(145,203,208,.62); background: transparent; color: var(--accent); cursor: pointer; font-size: 10px; white-space: nowrap; }
     .city-change:hover { color: var(--paper); border-color: var(--paper); }
     .weather-now { display: flex; align-items: center; gap: 15px; }
     .weather-now > div:last-child { min-width: 0; }
     .weather-icon { width: clamp(42px, 4.3vw, 66px); height: clamp(42px, 4.3vw, 66px); flex: 0 0 auto; display: grid; place-items: center; color: var(--paper); }
     .weather-symbol { display: block; width: 100%; height: 100%; overflow: visible; }
     .temperature { color: var(--paper); font-size: clamp(50px, 5.3vw, 82px); line-height: .94; letter-spacing: -.075em; font-weight: 390; font-variant-numeric: tabular-nums; }
-    .weather-desc { margin-top: 5px; color: #e3e2de; font-size: clamp(11px, .9vw, 14px); line-height: 1.3; }
+    .weather-desc { margin-top: 5px; color: var(--paper); font-size: clamp(11px, .9vw, 14px); line-height: 1.3; }
     .weather-meta { display: flex; flex-wrap: wrap; gap: 5px 14px; color: var(--muted); font-size: clamp(10px, .62vw, 12px); line-height: 1.35; }
     .forecast { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 9px 0 2px; border-top: 1px solid var(--line); }
     .forecast-day { text-align: center; color: var(--ash); font-size: clamp(10px, .62vw, 12px); line-height: 1.25; }
-    .forecast-symbol { display: block; width: 24px; height: 24px; margin: 3px auto; color: var(--paper); }
+    .forecast-symbol { display: block; width: 27px; height: 27px; margin: 3px auto; }
     .forecast-temps { color: var(--paper); font-size: clamp(10px, .62vw, 12px); font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .small-action { flex: 0 0 auto; border: 1px solid var(--line-strong); border-radius: 999px; padding: 7px 12px; background: rgba(85,87,91,.52); color: var(--paper); cursor: pointer; font-size: 11px; font-weight: 600; white-space: nowrap; transition: background .2s, border-color .2s; }
+    .small-action { flex: 0 0 auto; border: 1px solid var(--line-strong); border-radius: 999px; padding: 7px 12px; background: var(--slate); color: var(--paper); cursor: pointer; font-size: 11px; font-weight: 600; white-space: nowrap; transition: background .2s, border-color .2s; }
     .small-action:hover { background: var(--slate); border-color: var(--ash); }
     .news-board {
       grid-column: 1 / -1; grid-row: 3; min-height: 0; display: grid; grid-template-rows: auto repeat(6, minmax(0, 1fr));
       padding: 10px clamp(16px, 1.8vw, 28px); border: 1px solid var(--line); border-radius: 21px;
-      background: linear-gradient(145deg, rgba(57,59,63,.93), rgba(43,44,47,.97));
-      box-shadow: 0 18px 40px rgba(0,0,0,.22), inset 0 1px rgba(241,240,236,.07);
+      background: var(--surface);
     }
     .news-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 30px; color: var(--paper); font-size: 12px; font-weight: 680; letter-spacing: .045em; }
     .news-heading span:last-child { color: var(--muted); font-size: 10px; font-weight: 450; letter-spacing: .02em; }
     .news-row { min-height: 0; display: grid; grid-template-columns: clamp(130px, 13vw, 190px) minmax(0, 1fr); gap: 10px; align-items: stretch; padding: 5px 0; border-bottom: 1px solid var(--line-soft); }
     .news-row:last-child { border-bottom: 0; }
-    .news-category { display: flex; flex-direction: column; justify-content: center; padding-left: 13px; border-left: 2px solid var(--slate); }
-    .category-name { color: #e7e6e2; font-size: clamp(10px, .84vw, 13px); font-weight: 680; letter-spacing: .09em; text-transform: uppercase; }
+    .news-row[data-category="argentina"] { --category-accent: #7fcbd7; }
+    .news-row[data-category="mundo"] { --category-accent: #91aee8; }
+    .news-row[data-category="economia"] { --category-accent: #91c8a1; }
+    .news-row[data-category="ciencia"] { --category-accent: #c1a5df; }
+    .news-row[data-category="tecnologia"] { --category-accent: #78c3cf; }
+    .news-row[data-category="ia"] { --category-accent: #e2bd73; }
+    .news-category { display: flex; flex-direction: column; justify-content: center; padding-left: 13px; border-left: 2px solid var(--category-accent, var(--slate)); }
+    .category-name { color: var(--category-accent, var(--paper)); font-size: clamp(10px, .84vw, 13px); font-weight: 680; letter-spacing: .09em; text-transform: uppercase; }
     .category-note { margin-top: 4px; color: var(--muted); font-size: 9px; }
     .news-items { min-width: 0; min-height: 0; display: grid; grid-template-columns: minmax(0,1fr); gap: 5px; align-items: stretch; }
     .news-item { min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 4px 11px; border-radius: 9px; color: var(--text); text-decoration: none; overflow: hidden; transition: background .2s; }
@@ -252,7 +252,7 @@
 
       <section class="card weather-card" aria-label="Clima y pronóstico local">
         <div class="weather-top"><div><div class="eyebrow">Clima local</div><div class="city-name" id="cityName">Buenos Aires</div></div><button class="city-change" id="cityButton" type="button">Cambiar ubicación</button></div>
-        <div class="weather-now"><div class="weather-icon" id="weatherIcon" aria-hidden="true"><svg class="weather-symbol" viewBox="0 0 64 64" focusable="false"><circle cx="25" cy="24" r="10" fill="#A6A8AB"/><path d="M24 7v4m0 26v4m17-17h-4M11 24H7m29-12-3 3m-18 18-3 3m24 0-3-3M15 15l-3-3" stroke="#F1F0EC" stroke-width="2" stroke-linecap="round"/><path d="M19 47h29c7 0 11-4 11-10 0-5-4-9-10-9-2-8-8-13-16-13-8 0-14 5-16 12-6 0-10 4-10 10 0 6 5 10 12 10Z" fill="#55575B" stroke="#F1F0EC" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><div class="temperature" id="temperature">--°</div><div class="weather-desc" id="weatherDescription">Buscando el pronóstico…</div></div></div>
+        <div class="weather-now"><div class="weather-icon" id="weatherIcon" aria-hidden="true"><svg class="weather-symbol" viewBox="0 0 64 64" focusable="false"><g fill="none" stroke="#F2B84B" stroke-width="2" stroke-linecap="round"><path d="M24 7v4m0 20v4m17-14h-4M11 21H7m29-11-3 3m-18 18-3 3m24 0-3-3M15 12l-3-3"/></g><circle cx="24" cy="21" r="9" fill="#FFD166" stroke="#FFF0B5" stroke-width="1.5"/><path d="M18.5 45h29c7 0 11.5-4.1 11.5-9.8 0-5.2-4.1-9.1-10-9.4-2-8.1-8.3-13.3-16-13.3-8.1 0-14.2 5.4-15.7 12.8-5.9.2-9.8 4-9.8 9.2 0 6.4 4.6 10.5 11 10.5Z" fill="#A4C4D4" stroke="#F1F0EC" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><div class="temperature" id="temperature">--°</div><div class="weather-desc" id="weatherDescription">Buscando el pronóstico…</div></div></div>
         <div class="weather-meta"><span id="feelsLike">Sensación --°</span><span id="wind">Viento -- km/h</span><span id="rainChance">Lluvia --%</span></div>
         <div class="forecast" id="forecast" aria-label="Pronóstico de cinco días"></div>
       </section>
@@ -350,16 +350,16 @@
         return ['Variable', 'partly'];
       }
       function weatherSymbol(kind, className) {
-        const cloud = '<path d="M18.5 45h29c7 0 11.5-4.1 11.5-9.8 0-5.2-4.1-9.1-10-9.4-2-8.1-8.3-13.3-16-13.3-8.1 0-14.2 5.4-15.7 12.8-5.9.2-9.8 4-9.8 9.2 0 6.4 4.6 10.5 11 10.5Z" fill="#A6A8AB" stroke="#F1F0EC" stroke-width="1.8" stroke-linejoin="round"/>';
+        const cloud = '<path d="M18.5 45h29c7 0 11.5-4.1 11.5-9.8 0-5.2-4.1-9.1-10-9.4-2-8.1-8.3-13.3-16-13.3-8.1 0-14.2 5.4-15.7 12.8-5.9.2-9.8 4-9.8 9.2 0 6.4 4.6 10.5 11 10.5Z" fill="#A4C4D4" stroke="#F1F0EC" stroke-width="1.8" stroke-linejoin="round"/><path d="M19 27c1.9-7.7 7.5-12 14-12 4.8 0 9.1 2.2 11.9 6.2-4.2-1.9-9.3-2.4-14.1-1.2-4.2 1-7.8 3.3-10.4 7Z" fill="#E2EFF3" opacity=".86"/>';
         let art = cloud;
-        if (kind === 'sun') art = '<g fill="none" stroke="#F1F0EC" stroke-width="2" stroke-linecap="round"><path d="M32 5v5m0 44v5M5 32h5m44 0h5M13 13l4 4m30 30 4 4m0-38-4 4m-30 30-4 4"/></g><circle cx="32" cy="32" r="12" fill="#A6A8AB" stroke="#F1F0EC" stroke-width="1.5"/>';
-        if (kind === 'moon') art = '<path d="M43.5 9.5c-2.7 2.6-4.4 6.3-4.4 10.4 0 8 6.5 14.5 14.5 14.5.4 0 .8 0 1.2-.1-1.2 10-9.7 17.7-20 17.7-11.1 0-20.1-9-20.1-20.1 0-10.7 8.4-19.4 18.9-20.1 3.3-.2 6.8.6 9.9 2.3Z" fill="#A6A8AB" stroke="#F1F0EC" stroke-width="1.7" stroke-linejoin="round"/>';
-        if (kind === 'partly') art = '<g fill="none" stroke="#F1F0EC" stroke-width="1.8" stroke-linecap="round"><path d="M24 7v4m0 20v4m17-14h-4M11 21H7m29-11-3 3m-18 18-3 3m24 0-3-3M15 12l-3-3"/></g><circle cx="24" cy="21" r="9" fill="#A6A8AB"/>' + cloud;
-        if (kind === 'fog') art = cloud + '<path d="M10 51h40M15 57h33" stroke="#A6A8AB" stroke-width="2.3" stroke-linecap="round"/>';
-        if (kind === 'drizzle') art = cloud + '<path d="m22 51-2 4m13-4-2 4m13-4-2 4" stroke="#A6A8AB" stroke-width="2.6" stroke-linecap="round"/>';
-        if (kind === 'rain') art = cloud + '<path d="m21 50-3 7m14-7-3 7m14-7-3 7" stroke="#F1F0EC" stroke-width="2.6" stroke-linecap="round"/>';
-        if (kind === 'snow') art = cloud + '<g fill="#F1F0EC"><circle cx="20" cy="53" r="2.2"/><circle cx="32" cy="57" r="2.2"/><circle cx="44" cy="53" r="2.2"/></g>';
-        if (kind === 'storm') art = cloud + '<path d="m35 45-8 11h7l-3 8 12-14h-8l4-5Z" fill="#F1F0EC" stroke="#222326" stroke-width=".7" stroke-linejoin="round"/>';
+        if (kind === 'sun') art = '<g fill="none" stroke="#F2B84B" stroke-width="2.6" stroke-linecap="round"><path d="M32 5v5m0 44v5M5 32h5m44 0h5M13 13l4 4m30 30 4 4m0-38-4 4m-30 30-4 4"/></g><circle cx="32" cy="32" r="12" fill="#FFD166" stroke="#FFF0B5" stroke-width="1.7"/>';
+        if (kind === 'moon') art = '<path d="M43.5 9.5c-2.7 2.6-4.4 6.3-4.4 10.4 0 8 6.5 14.5 14.5 14.5.4 0 .8 0 1.2-.1-1.2 10-9.7 17.7-20 17.7-11.1 0-20.1-9-20.1-20.1 0-10.7 8.4-19.4 18.9-20.1 3.3-.2 6.8.6 9.9 2.3Z" fill="#E8D28F" stroke="#FFF1C6" stroke-width="1.7" stroke-linejoin="round"/><path d="m16 16 1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2Zm36 26 .8 1.7 1.7.8-1.7.8-.8 1.7-.8-1.7-1.7-.8 1.7-.8.8-1.7Z" fill="#F1F0EC"/>';
+        if (kind === 'partly') art = '<g fill="none" stroke="#F2B84B" stroke-width="2.2" stroke-linecap="round"><path d="M24 7v4m0 20v4m17-14h-4M11 21H7m29-11-3 3m-18 18-3 3m24 0-3-3M15 12l-3-3"/></g><circle cx="24" cy="21" r="9" fill="#FFD166" stroke="#FFF0B5" stroke-width="1.4"/>' + cloud;
+        if (kind === 'fog') art = cloud + '<path d="M10 51h40M15 57h33" stroke="#91A7B4" stroke-width="2.7" stroke-linecap="round"/>';
+        if (kind === 'drizzle') art = cloud + '<path d="m22 50-2 5m13-5-2 5m13-5-2 5" stroke="#62C7EA" stroke-width="2.8" stroke-linecap="round"/>';
+        if (kind === 'rain') art = cloud + '<path d="m21 50-3 7m14-7-3 7m14-7-3 7" stroke="#42B6E8" stroke-width="3" stroke-linecap="round"/>';
+        if (kind === 'snow') art = cloud + '<g fill="#9BE1E8"><circle cx="20" cy="53" r="2.6"/><circle cx="32" cy="57" r="2.6"/><circle cx="44" cy="53" r="2.6"/></g>';
+        if (kind === 'storm') art = cloud + '<path d="m35 45-8 11h7l-3 8 12-14h-8l4-5Z" fill="#FFD166" stroke="#FFF0B5" stroke-width="1" stroke-linejoin="round"/>';
         return `<svg class="${className}" viewBox="0 0 64 64" aria-hidden="true" focusable="false">${art}</svg>`;
       }
       function cacheFresh(key) {
