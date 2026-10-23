@@ -7,6 +7,7 @@
   <meta name="description" content="Mi casa: panel personal para TV con hora, fecha, clima local, tu lista de Notion y noticias del día.">
   <meta name="robots" content="index,follow">
   <meta name="google-site-verification" content="N7aH5845yywY78QzBBAWYuNp7Mmi-SAk7K0aTUAt238">
+  <link rel="preload" href="./assets/fonts/Inter-Variable.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="canonical" href="https://vittopais.github.io/mi-dashboard-tv/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Mi casa | Panel personal para TV">
@@ -14,6 +15,13 @@
   <meta property="og:url" content="https://vittopais.github.io/mi-dashboard-tv/">
   <title>Mi casa | Panel personal para TV</title>
   <style>
+    @font-face {
+      font-family: "Dashboard Inter";
+      src: url("./assets/fonts/Inter-Variable.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+    }
     :root {
       color-scheme: dark;
       --bg: #0a0c0e;
@@ -36,7 +44,7 @@
         radial-gradient(ellipse 60% 75% at 12% 0%, rgba(91, 102, 111, .13), transparent 70%),
         radial-gradient(ellipse 45% 60% at 100% 100%, rgba(69, 76, 82, .09), transparent 74%),
         #0a0c0e;
-      font-family: Inter, "Avenir Next", "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: "Dashboard Inter", Inter, "Avenir Next", "Segoe UI", Roboto, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
@@ -100,7 +108,7 @@
     .greeting { margin-top: 12px; color: var(--muted); font-size: clamp(11px, .92vw, 14px); letter-spacing: .015em; }
     .weather-card {
       grid-column: 2; grid-row: 2; position: relative;
-      padding: clamp(13px, 1.55vw, 24px) clamp(15px, 1.8vw, 28px);
+      padding: clamp(13px, 1.55vw, 24px) clamp(15px, 1.8vw, 28px) clamp(18px, 1.8vw, 30px);
       display: flex; flex-direction: column; justify-content: space-between; color: var(--text);
       border-color: var(--line); background: linear-gradient(145deg, #1b1f22, #131618);
       box-shadow: 0 16px 36px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.035);
@@ -115,13 +123,14 @@
       padding: 3px 0; border: 0; border-bottom: 1px solid rgba(220,226,229,.32);
       background: transparent; color: #c3c9cd; cursor: pointer; font-size: 10px; white-space: nowrap;
     }
-    .weather-now { display: flex; align-items: center; gap: 12px; }
+    .weather-now { display: flex; align-items: center; gap: 15px; }
+    .weather-now > div:last-child { min-width: 0; }
     .weather-icon { font-size: clamp(36px, 3.6vw, 56px); line-height: 1; filter: grayscale(.2); }
     .temperature { font-size: clamp(48px, 5.2vw, 80px); line-height: .92; letter-spacing: -.075em; font-weight: 430; color: #f2f3f3; }
-    .weather-desc { margin-top: 4px; color: #d3d7d9; font-size: clamp(11px, .9vw, 14px); }
-    .weather-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; color: #aeb5b9; font-size: 9px; }
-    .forecast { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; padding-top: 7px; border-top: 1px solid var(--line); }
-    .forecast-day { text-align: center; color: #b9c0c3; font-size: 9px; }
+    .weather-desc { margin-top: 6px; color: #d3d7d9; font-size: clamp(11px, .9vw, 14px); line-height: 1.3; }
+    .weather-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; color: #aeb5b9; font-size: 9px; line-height: 1.35; }
+    .forecast { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; padding: 8px 0 5px; border-top: 1px solid var(--line); }
+    .forecast-day { text-align: center; color: #b9c0c3; font-size: 9px; line-height: 1.25; }
     .forecast-icon { display: block; margin: 2px 0; color: #e4e6e7; font-size: 14px; filter: grayscale(.35); }
     .forecast-temps { color: #e5e7e8; font-size: 10px; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .small-action {
@@ -200,20 +209,21 @@
     .result-button:hover { background: rgba(255,255,255,.09); }
     .privacy-note { color: #aeb4b8; font-size: 11px !important; }
     @media (min-width: 901px) and (max-height: 820px) {
-      .screen { padding-top: 8px; padding-bottom: 6px; gap: 6px; grid-template-rows: auto minmax(145px,.66fr) minmax(88px,.38fr) minmax(0,1.24fr) auto; }
+      .screen { padding-top: 8px; padding-bottom: 6px; gap: 6px; grid-template-rows: auto minmax(160px,.72fr) minmax(88px,.38fr) minmax(0,1.18fr) auto; }
       header { min-height: 32px; }
       .brand-mark { width: 31px; height: 31px; border-radius: 11px; }
-      .clock-card, .weather-card { padding: 11px 16px; }
+      .clock-card { padding: 11px 16px; }
+      .weather-card { padding: 12px 18px 15px; gap: 5px; }
       .clock { font-size: clamp(56px, 7vw, 94px); }
       .greeting { margin-top: 7px; }
       .city-name { font-size: 13px; -webkit-line-clamp: 1; }
       .weather-icon { font-size: 32px; }
       .temperature { font-size: 45px; }
       .weather-desc { margin-top: 2px; font-size: 11px; }
-      .weather-meta { gap: 4px 9px; font-size: 8px; }
-      .forecast { padding-top: 4px; }
-      .forecast-day { font-size: 8px; }
-      .forecast-icon { font-size: 12px; margin: 1px 0; }
+      .weather-meta { gap: 4px 9px; font-size: 9px; }
+      .forecast { padding: 6px 0 5px; }
+      .forecast-day { font-size: 9px; }
+      .forecast-icon { font-size: 13px; margin: 2px 0; }
       .forecast-temps { font-size: 9px; }
       .notion-card { padding-top: 6px; padding-bottom: 6px; gap: 4px; }
       .notion-list { gap: 5px 14px; }
@@ -232,17 +242,18 @@
       .brand-mark { width: 27px; height: 27px; font-size: 17px; }
       .brand-caption { font-size: 9px; }
       .soft-button { padding: 6px 11px; }
-      .clock-card, .weather-card { padding: 8px 13px; }
+      .clock-card { padding: 8px 13px; }
+      .weather-card { padding: 9px 15px 12px; gap: 4px; }
       .clock { font-size: clamp(50px, 6.5vw, 78px); }
       .date { font-size: 14px; }
       .greeting { margin-top: 4px; font-size: 10px; }
       .weather-icon { font-size: 27px; }
       .temperature { font-size: 38px; }
       .weather-desc { font-size: 10px; }
-      .weather-meta { font-size: 7px; gap: 3px 7px; }
-      .forecast { padding-top: 3px; }
-      .forecast-day { font-size: 7px; }
-      .forecast-icon { font-size: 10px; margin: 0; }
+      .weather-meta { font-size: 8px; gap: 3px 7px; }
+      .forecast { padding: 4px 0 3px; }
+      .forecast-day { font-size: 8px; }
+      .forecast-icon { font-size: 11px; margin: 1px 0; }
       .forecast-temps { font-size: 8px; }
       .notion-card { padding-top: 5px; padding-bottom: 5px; }
       .notion-title { font-size: 11px; }
