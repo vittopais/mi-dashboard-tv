@@ -24,7 +24,7 @@ La página intenta mantener la pantalla activa si el navegador de la tele admite
 ## Qué se actualiza y qué se guarda
 
 - El reloj y la fecha se actualizan en pantalla. Clima y lluvia por zonas se consultan cada 10 minutos; los titulares se regeneran aproximadamente cada 15 minutos.
-- El pronóstico de zonas muestra la probabilidad máxima de lluvia y los milímetros estimados para las próximas tres horas en una cuadrícula alrededor de la ubicación elegida. Es pronóstico por zona, no una imagen de radar en movimiento.
+- La cuadrícula muestra nueve zonas alrededor de la ubicación elegida. Alterna automáticamente cada ocho segundos entre la hora actual y las dos siguientes; en cada zona indica la probabilidad y los milímetros previstos para esa hora. Es pronóstico por zona, no una imagen de radar en movimiento.
 - El clima usa Open-Meteo. Las noticias son titulares de Google News y cada tarjeta abre la nota original.
 - La ubicación inicial es Buenos Aires. Se puede cambiar buscando una ciudad o autorizando la ubicación del navegador. Si elegís la ubicación actual, las coordenadas se envían a Open-Meteo para el pronóstico; la ubicación queda guardada solo en ese navegador.
 - La agenda se guarda únicamente en el almacenamiento local del navegador de la tele. No se sincroniza con otros dispositivos ni se sube a GitHub.

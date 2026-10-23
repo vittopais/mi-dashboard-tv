@@ -195,9 +195,9 @@
       </section>
 
       <section class="card rain-card" aria-label="Pronóstico de lluvia por zonas">
-        <div class="rain-heading"><div><div class="eyebrow">Mapa meteorológico</div><div class="rain-title">Lluvia en tu zona</div><div class="rain-summary" id="rainSummary">Próximas 3 horas · Buenos Aires</div></div><span aria-hidden="true">🌧️</span></div>
+        <div class="rain-heading"><div><div class="eyebrow">Mapa meteorológico</div><div class="rain-title">Lluvia en tu zona</div><div class="rain-summary" id="rainSummary">Pronóstico por hora · Buenos Aires</div></div><span aria-hidden="true">🌧️</span></div>
         <div class="rain-grid" id="rainGrid" aria-live="polite"></div>
-        <div class="rain-legend"><span>Probabilidad de lluvia</span><span id="rainUpdated">Actualizando…</span></div>
+        <div class="rain-legend"><span>Probabilidad · mm / hora</span><span id="rainUpdated">Actualizando…</span></div>
       </section>
     </section>
 
@@ -311,7 +311,7 @@
       }
       function updatePlaceLabel() {
         $('cityName').textContent = cityLabel(place);
-        $('rainSummary').textContent = 'Próximas 3 h · ' + (place.name || cityLabel(place));
+        $('rainSummary').textContent = 'Pronóstico por hora · ' + (place.name || cityLabel(place));
       }
       async function loadWeather(force = false) {
         updatePlaceLabel();
@@ -360,6 +360,8 @@
       loadWeather(); setInterval(loadWeather, UPDATE_MS);
 
       const ZONE_LABELS = ['Noroeste', 'Norte', 'Noreste', 'Oeste', 'Tu zona', 'Este', 'Sudoeste', 'Sur', 'Sudeste'];
+      let zoneFrames = null;
+      let zoneStep = 0;
       function zonePoints() {
         const lat = Number(place.latitude), lon = Number(place.longitude);
         const dLat = .11;
@@ -395,23 +397,37 @@
       function renderZoneForecast(data) {
         const forecasts = Array.isArray(data) ? data : [data];
         const now = new Date();
-        const currentHour = new Intl.DateTimeFormat('en-CA', { timeZone: AR_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hour12: false }).format(now).replace(', ', 'T');
-        const cells = forecasts.slice(0, 9).map((forecast, i) => {
+        const nowParts = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: AR_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23' }).formatToParts(now).map(part => [part.type, part.value]));
+        const currentHour = `${nowParts.year}-${nowParts.month}-${nowParts.day}T${nowParts.hour}`;
+        zoneFrames = forecasts.slice(0, 9).map(forecast => {
           const hours = forecast.hourly || {};
           let start = Array.isArray(hours.time) ? hours.time.findIndex(t => t >= currentHour) : 0;
           if (start < 0) start = 0;
-          const probabilities = (hours.precipitation_probability || []).slice(start, start + 3).filter(Number.isFinite);
-          const precip = (hours.precipitation || []).slice(start, start + 3).filter(Number.isFinite).reduce((sum, value) => sum + value, 0);
-          const chance = probabilities.length ? Math.max(...probabilities) : null;
+          return { hours, start };
+        });
+        zoneStep = 0;
+        renderZoneForecastStep(now);
+      }
+      function renderZoneForecastStep(now = new Date()) {
+        if (!zoneFrames) return;
+        const cells = zoneFrames.map(({ hours, start }, i) => {
+          const index = start + zoneStep;
+          const chance = hours.precipitation_probability?.[index];
+          const precip = hours.precipitation?.[index];
           const level = chance >= 60 ? 'high' : chance >= 30 ? 'medium' : chance > 0 ? 'low' : '';
           const center = i === 4 ? ' center' : '';
-          const amount = precip < .1 ? '0 mm' : precip.toFixed(1) + ' mm';
-          return `<div class="rain-cell${center} ${level}" title="${escapeHtml(ZONE_LABELS[i])}: ${chance == null ? 'sin dato' : chance + '%'} de probabilidad, ${amount} previstos en 3 horas"><span class="rain-zone">${escapeHtml(ZONE_LABELS[i])}</span><span class="rain-prob">${chance == null ? '—' : chance + '%'}</span><span class="rain-mm">${amount} / 3 h</span></div>`;
+          const amount = !Number.isFinite(precip) || precip < .1 ? '0 mm' : precip.toFixed(1) + ' mm';
+          return `<div class="rain-cell${center} ${level}" title="${escapeHtml(ZONE_LABELS[i])}: ${chance == null ? 'sin dato' : chance + '%'} de probabilidad, ${amount} previstos en esa hora"><span class="rain-zone">${escapeHtml(ZONE_LABELS[i])}</span><span class="rain-prob">${chance == null ? '—' : chance + '%'}</span><span class="rain-mm">${amount} / h</span></div>`;
         }).join('');
         $('rainGrid').innerHTML = cells;
+        const firstTime = zoneFrames[0]?.hours.time?.[zoneFrames[0].start + zoneStep] || '';
+        const hourLabel = firstTime.slice(-5);
+        const horizon = zoneStep === 0 ? 'Ahora' : `En ${zoneStep} h`;
+        $('rainSummary').textContent = `${horizon}${hourLabel ? ' · ' + hourLabel : ''} · ${place.name || cityLabel(place)}`;
         $('rainUpdated').textContent = 'Actualizado ' + new Intl.DateTimeFormat('es-AR', { timeZone: AR_TZ, hour: '2-digit', minute: '2-digit', hour12: false }).format(now);
       }
       loadZoneForecast(); setInterval(loadZoneForecast, UPDATE_MS);
+      setInterval(() => { if (zoneFrames) { zoneStep = (zoneStep + 1) % 3; renderZoneForecastStep(); } }, 8000);
 
       function renderCategory(category, items) {
         const container = $('news-' + category.id);
