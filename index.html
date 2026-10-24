@@ -105,16 +105,23 @@
     .city-change { flex: 0 0 auto; padding: 3px 0; border: 0; border-bottom: 1px solid rgba(145,203,208,.62); background: transparent; color: var(--accent); cursor: pointer; font-size: 10px; white-space: nowrap; }
     .city-change:hover { color: var(--paper); border-color: var(--paper); }
     .weather-now { display: flex; align-items: center; gap: 15px; }
-    .weather-now > div:last-child { min-width: 0; }
+    .weather-current { min-width: 0; }
     .weather-icon { width: clamp(42px, 4.3vw, 66px); height: clamp(42px, 4.3vw, 66px); flex: 0 0 auto; display: grid; place-items: center; color: var(--paper); }
     .weather-symbol { display: block; width: 100%; height: 100%; overflow: visible; }
     .temperature { color: var(--paper); font-size: clamp(50px, 5.3vw, 82px); line-height: .94; letter-spacing: -.075em; font-weight: 390; font-variant-numeric: tabular-nums; }
     .weather-desc { margin-top: 5px; color: var(--paper); font-size: clamp(11px, .9vw, 14px); line-height: 1.3; }
+    .weather-range { margin-left: auto; align-self: flex-start; padding-top: 6px; color: var(--paper); font-size: clamp(11px, .82vw, 14px); line-height: 1.45; text-align: right; white-space: nowrap; }
+    .weather-range span { color: var(--muted); padding: 0 3px; }
     .weather-meta { display: flex; flex-wrap: wrap; gap: 5px 14px; color: var(--muted); font-size: clamp(10px, .62vw, 12px); line-height: 1.35; }
-    .forecast { flex: 0 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 9px 0 2px; border-top: 1px solid var(--line); }
-    .forecast-day { text-align: center; color: var(--ash); font-size: clamp(10px, .62vw, 12px); line-height: 1.25; }
-    .forecast-symbol { display: block; width: 27px; height: 27px; margin: 3px auto; }
-    .forecast-temps { color: var(--paper); font-size: clamp(10px, .62vw, 12px); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .forecast-block { flex: 0 0 auto; margin-top: auto; padding-top: clamp(8px, 1vw, 15px); border-top: 1px solid var(--line); }
+    .forecast-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: clamp(6px, .65vw, 10px); color: var(--ash); font-size: clamp(9px, .66vw, 12px); letter-spacing: .045em; }
+    .forecast-heading span:last-child { color: var(--muted); font-size: .92em; font-variant-numeric: tabular-nums; letter-spacing: 0; }
+    .forecast { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(2px, .55vw, 9px); }
+    .forecast-hour { min-width: 0; display: grid; justify-items: center; align-content: start; text-align: center; }
+    .forecast-hour-label { color: var(--ash); font-size: clamp(10px, .72vw, 13px); line-height: 1.25; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .forecast-hour.current .forecast-hour-label { color: var(--accent); }
+    .forecast-symbol { display: block; width: clamp(26px, 2.25vw, 36px); height: clamp(26px, 2.25vw, 36px); margin: clamp(4px, .45vw, 7px) auto clamp(3px, .35vw, 6px); }
+    .forecast-temps { color: var(--paper); font-size: clamp(11px, .78vw, 14px); line-height: 1.2; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .small-action { flex: 0 0 auto; border: 1px solid var(--line-strong); border-radius: 999px; padding: 7px 12px; background: var(--slate); color: var(--paper); cursor: pointer; font-size: 11px; font-weight: 600; white-space: nowrap; transition: background .2s, border-color .2s; }
     .small-action:hover { background: var(--slate); border-color: var(--ash); }
     .news-board {
@@ -170,10 +177,12 @@
       .temperature { font-size: 46px; }
       .weather-desc { margin-top: 2px; font-size: 11px; }
       .weather-meta { gap: 4px 9px; font-size: 9px; }
-      .forecast { padding: 6px 0 3px; }
-      .forecast-day { font-size: 9px; }
-      .forecast-symbol { width: 19px; height: 19px; margin: 2px auto; }
-      .forecast-temps { font-size: 9px; }
+      .forecast-block { padding-top: 6px; }
+      .forecast-heading { margin-bottom: 4px; font-size: 9px; }
+      .forecast { gap: 1px; }
+      .forecast-hour-label { font-size: 9px; }
+      .forecast-symbol { width: 20px; height: 20px; margin: 2px auto; }
+      .forecast-temps { font-size: 10px; }
       .news-board { padding-top: 5px; padding-bottom: 5px; }
       .news-heading { min-height: 22px; font-size: 10px; }
       .news-row { padding: 3px 0; }
@@ -198,10 +207,11 @@
       .temperature { font-size: 38px; }
       .weather-desc { font-size: 10px; }
       .weather-meta { font-size: 8px; gap: 3px 7px; }
-      .forecast { padding: 4px 0 2px; }
-      .forecast-day { font-size: 8px; }
-      .forecast-symbol { width: 16px; height: 16px; margin: 1px auto; }
-      .forecast-temps { font-size: 8px; }
+      .forecast-heading { font-size: 8px; }
+      .forecast { gap: 1px; }
+      .forecast-hour-label { font-size: 8px; }
+      .forecast-symbol { width: 18px; height: 18px; margin: 1px auto; }
+      .forecast-temps { font-size: 9px; }
       .news-board { padding-top: 3px; padding-bottom: 3px; }
       .news-heading { min-height: 18px; font-size: 9px; }
       .news-heading span:last-child { font-size: 8px; }
@@ -294,10 +304,9 @@
     .temperature { font-size: clamp(56px, 5vw, 88px); }
     .weather-desc { font-size: clamp(12px, .95vw, 16px); }
     .weather-meta { gap: 6px 14px; font-size: clamp(10px, .68vw, 12px); }
-    .forecast { gap: 8px; padding: 12px 0 3px; }
-    .forecast-day { font-size: clamp(10px, .72vw, 13px); }
-    .forecast-symbol { width: clamp(24px, 2vw, 34px); height: clamp(24px, 2vw, 34px); margin: 5px auto; }
-    .forecast-temps { font-size: clamp(10px, .7vw, 13px); }
+    .forecast { gap: clamp(2px, .55vw, 9px); padding: 0; }
+    .forecast-symbol { width: clamp(26px, 2.25vw, 36px); height: clamp(26px, 2.25vw, 36px); margin: clamp(4px, .45vw, 7px) auto clamp(3px, .35vw, 6px); }
+    .forecast-temps { font-size: clamp(11px, .78vw, 14px); }
     .news-board { grid-column: 2; grid-row: 2 / 4; min-width: 0; padding: clamp(15px, 1.8vw, 31px) clamp(18px, 2vw, 36px); grid-template-rows: auto repeat(6, minmax(0, 1fr)); background: rgba(25,27,29,.76); }
     .news-heading { min-height: 38px; font-size: clamp(12px, .88vw, 15px); }
     .news-heading span:last-child { font-size: clamp(9px, .66vw, 12px); }
@@ -320,7 +329,8 @@
       .clock { font-size: clamp(62px,7.2vw,108px); }
       .temperature { font-size: clamp(48px,4.4vw,68px); }
       .weather-icon { width: 48px; height: 48px; }
-      .forecast { padding-top: 8px; }
+      .forecast-block { padding-top: 7px; }
+      .forecast-heading { margin-bottom: 5px; }
       .forecast-symbol { width: 23px; height: 23px; margin: 3px auto; }
       .news-board { padding-top: 12px; padding-bottom: 12px; }
       .news-row { padding: 4px 0; }
@@ -372,14 +382,17 @@
       .city-name { font-size: clamp(11px, .85vw, 15px); }
       .city-change { font-size: 9px; }
       .weather-now { gap: 10px; }
+      .weather-range { padding-top: 3px; font-size: clamp(9px, .65vw, 11px); }
       .weather-icon { width: 38px; height: 38px; }
       .temperature { font-size: clamp(40px, 3.8vw, 62px); }
       .weather-desc { margin-top: 2px; font-size: clamp(10px, .72vw, 12px); }
       .weather-meta { gap: 3px 8px; font-size: clamp(8px, .55vw, 10px); line-height: 1.2; }
-      .forecast { gap: 3px; padding: 4px 0 1px; }
-      .forecast-day { font-size: 9px; line-height: 1.1; }
-      .forecast-symbol { width: 20px; height: 20px; margin: 2px auto; }
-      .forecast-temps { font-size: 9px; }
+      .forecast-block { padding-top: 5px; }
+      .forecast-heading { margin-bottom: 4px; font-size: clamp(10px, .75vw, 13px); }
+      .forecast { gap: 1px; }
+      .forecast-hour-label { font-size: clamp(11px, .82vw, 15px); line-height: 1.2; }
+      .forecast-symbol { width: clamp(23px, 1.8vw, 32px); height: clamp(23px, 1.8vw, 32px); margin: 3px auto; }
+      .forecast-temps { font-size: clamp(12px, .85vw, 15px); }
       .news-board { padding: 6px clamp(12px, 1.5vw, 22px); grid-template-rows: 22px repeat(6, minmax(0, 1fr)); }
       .news-heading { min-height: 22px; font-size: 10px; }
       .news-heading span:last-child { font-size: 8px; }
@@ -411,9 +424,9 @@
 
       <section class="card weather-card" aria-label="Clima y pronóstico local">
         <div class="weather-top"><div class="weather-heading"><div class="eyebrow">Clima local</div><button class="city-change" id="cityButton" type="button">Cambiar ubicación</button></div><div class="city-name" id="cityName">Buenos Aires</div></div>
-        <div class="weather-now"><div class="weather-icon" id="weatherIcon" aria-hidden="true"><svg class="weather-symbol" viewBox="0 0 64 64" focusable="false"><g fill="none" stroke="#F2B84B" stroke-width="2" stroke-linecap="round"><path d="M24 7v4m0 20v4m17-14h-4M11 21H7m29-11-3 3m-18 18-3 3m24 0-3-3M15 12l-3-3"/></g><circle cx="24" cy="21" r="9" fill="#FFD166" stroke="#FFF0B5" stroke-width="1.5"/><path d="M18.5 45h29c7 0 11.5-4.1 11.5-9.8 0-5.2-4.1-9.1-10-9.4-2-8.1-8.3-13.3-16-13.3-8.1 0-14.2 5.4-15.7 12.8-5.9.2-9.8 4-9.8 9.2 0 6.4 4.6 10.5 11 10.5Z" fill="#A4C4D4" stroke="#F1F0EC" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div><div class="temperature" id="temperature">--°</div><div class="weather-desc" id="weatherDescription">Buscando el pronóstico…</div></div></div>
+        <div class="weather-now"><div class="weather-icon" id="weatherIcon" aria-hidden="true"><svg class="weather-symbol" viewBox="0 0 64 64" focusable="false"><g fill="none" stroke="#F2B84B" stroke-width="2" stroke-linecap="round"><path d="M24 7v4m0 20v4m17-14h-4M11 21H7m29-11-3 3m-18 18-3 3m24 0-3-3M15 12l-3-3"/></g><circle cx="24" cy="21" r="9" fill="#FFD166" stroke="#FFF0B5" stroke-width="1.5"/><path d="M18.5 45h29c7 0 11.5-4.1 11.5-9.8 0-5.2-4.1-9.1-10-9.4-2-8.1-8.3-13.3-16-13.3-8.1 0-14.2 5.4-15.7 12.8-5.9.2-9.8 4-9.8 9.2 0 6.4 4.6 10.5 11 10.5Z" fill="#A4C4D4" stroke="#F1F0EC" stroke-width="1.8" stroke-linejoin="round"/></svg></div><div class="weather-current"><div class="temperature" id="temperature">--°</div><div class="weather-desc" id="weatherDescription">Buscando el pronóstico…</div></div><div class="weather-range" id="dailyRange">Máx. --° <span>·</span> Mín. --°</div></div>
         <div class="weather-meta"><span id="feelsLike">Sensación --°</span><span id="wind">Viento -- km/h</span><span id="rainChance">Lluvia --%</span></div>
-        <div class="forecast" id="forecast" aria-label="Pronóstico de cinco días"></div>
+        <div class="forecast-block"><div class="forecast-heading"><span>Pronóstico por hora</span><span id="forecastWindow">Próximas horas</span></div><div class="forecast" id="forecast" aria-label="Pronóstico por hora"></div></div>
       </section>
     </section>
 
@@ -545,7 +558,7 @@
       async function loadWeather() {
         if (weatherLoading) return;
         updatePlaceLabel();
-        const cacheKey = 'miCasa.weather.' + Number(place.latitude).toFixed(3) + ',' + Number(place.longitude).toFixed(3);
+        const cacheKey = 'miCasa.weather.hourly.v2.' + Number(place.latitude).toFixed(3) + ',' + Number(place.longitude).toFixed(3);
         const saved = readSaved(cacheKey, null);
         const cached = cacheFresh(cacheKey);
         if (cached) { weatherUpdatedAt = saved.at; renderWeather(cached); return; }
@@ -554,8 +567,9 @@
           const params = new URLSearchParams({
             latitude: place.latitude, longitude: place.longitude,
             current: 'temperature_2m,apparent_temperature,weather_code,wind_speed_10m,is_day',
+            hourly: 'temperature_2m,weather_code,is_day',
             daily: 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max',
-            forecast_days: '5', timezone: 'auto'
+            forecast_days: '2', forecast_hours: '24', timezone: 'auto'
           });
           const response = await fetch(WEATHER_URL + '?' + params.toString(), { cache: 'no-store' });
           if (!response.ok) throw new Error('weather');
@@ -586,12 +600,30 @@
         $('wind').textContent = 'Viento ' + Math.round(c.wind_speed_10m) + ' km/h';
         const chance = daily.precipitation_probability_max?.[0];
         $('rainChance').textContent = 'Lluvia ' + (chance == null ? '--' : chance) + '%';
-        $('forecast').innerHTML = daily.time.map((day, i) => {
-          const [desc, dayIcon] = weatherInfo(daily.weather_code[i]);
-          const date = new Date(day + 'T12:00:00');
-          const weekday = i === 0 ? 'Hoy' : new Intl.DateTimeFormat('es-AR', { weekday: 'short', timeZone: AR_TZ }).format(date).replace('.', '');
-          return `<div class="forecast-day" title="${escapeHtml(desc)}">${weekday}${weatherSymbol(dayIcon, 'forecast-symbol')}<span class="forecast-temps">${Math.round(daily.temperature_2m_max[i])}° <span style="color:var(--muted)">${Math.round(daily.temperature_2m_min[i])}°</span></span></div>`;
-        }).join('');
+        const max = daily.temperature_2m_max?.[0], min = daily.temperature_2m_min?.[0];
+        $('dailyRange').innerHTML = `Máx. ${max == null ? '--' : Math.round(max)}° <span>·</span> Mín. ${min == null ? '--' : Math.round(min)}°`;
+        const hourly = data.hourly;
+        if (hourly?.time?.length) {
+          const currentKey = String(c.time || '').slice(0, 16);
+          let start = hourly.time.findIndex(time => time >= currentKey);
+          if (start < 0) start = 0;
+          const hours = hourly.time.slice(start, start + 6);
+          const currentHour = String(c.time || '').slice(11, 13);
+          $('forecast').innerHTML = hours.map((time, offset) => {
+            const i = start + offset;
+            const [desc, icon] = weatherInfo(hourly.weather_code[i], hourly.is_day?.[i] ?? 1);
+            const hour = Number(String(time).slice(11, 13));
+            const label = String(hour).padStart(2, '0') + ' h';
+            const current = offset === 0 && String(time).slice(11, 13) === currentHour;
+            return `<div class="forecast-hour${current ? ' current' : ''}" title="${escapeHtml(desc)}"><span class="forecast-hour-label">${label}</span>${weatherSymbol(icon, 'forecast-symbol')}<span class="forecast-temps">${Math.round(hourly.temperature_2m[i])}°</span></div>`;
+          }).join('');
+          const firstHour = hours[0] ? String(hours[0]).slice(11, 13) : '';
+          const lastHour = hours.length ? String(hours[hours.length - 1]).slice(11, 13) : '';
+          $('forecastWindow').textContent = hours.length ? `${firstHour}–${lastHour} h` : 'Próximas horas';
+        } else {
+          $('forecast').innerHTML = '<div class="news-loading">Pronóstico por hora no disponible.</div>';
+          $('forecastWindow').textContent = 'Próximas horas';
+        }
         setUpdatedTime();
       }
       function formatUpdateTime(timestamp) {
