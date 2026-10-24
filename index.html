@@ -145,6 +145,8 @@
     footer a { color: inherit; text-underline-offset: 3px; }
     .status { position: fixed; z-index: 20; left: 50%; bottom: 22px; transform: translate(-50%,20px); opacity: 0; pointer-events: none; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface); padding: 11px 16px; color: var(--paper); transition: .2s; font-size: 13px; box-shadow: 0 12px 34px rgba(0,0,0,.35); }
     .status.show { opacity: 1; transform: translate(-50%,0); }
+    body::after { content: ""; position: fixed; z-index: 30; inset: 0; pointer-events: none; background: rgba(0,0,0,0); transition: background 1.2s ease; }
+    body.rest-mode::after { background: rgba(0,0,0,.90); }
     .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 10; align-items: center; justify-content: center; padding: 20px; background: rgba(20,20,21,.82); backdrop-filter: blur(8px); }
     .modal-backdrop.open { display: flex; }
     .modal { width: min(520px,100%); max-height: 92vh; overflow: auto; padding: 25px; border: 1px solid var(--line-strong); border-radius: 20px; background: var(--surface); box-shadow: 0 24px 70px rgba(0,0,0,.5); }
@@ -293,6 +295,8 @@
       const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
       const WEATHER_REFRESH_MS = 5 * 60 * 1000;
       const NEWS_POLL_MS = 5 * 60 * 1000;
+      const REST_START_MINUTES = 23 * 60 + 30;
+      const REST_END_MINUTES = 6 * 60 + 30;
       const NEWS_URL = './news.json';
       const NEWS_CATEGORIES = [
         { id: 'argentina', label: 'Argentina' },
@@ -336,6 +340,18 @@
         $('greeting').textContent = hour < 12 ? 'Buen día' : hour < 19 ? 'Buenas tardes' : 'Buenas noches';
       }
       tick(); setInterval(tick, 15000);
+
+      function isRestTime(now = new Date()) {
+        const parts = new Intl.DateTimeFormat('en', { timeZone: AR_TZ, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(now);
+        const hour = Number(parts.find(part => part.type === 'hour')?.value || 0);
+        const minute = Number(parts.find(part => part.type === 'minute')?.value || 0);
+        const currentMinutes = hour * 60 + minute;
+        return currentMinutes >= REST_START_MINUTES || currentMinutes < REST_END_MINUTES;
+      }
+      function syncRestMode() {
+        document.body.classList.toggle('rest-mode', isRestTime());
+      }
+      syncRestMode(); setInterval(syncRestMode, 15000);
 
       function weatherInfo(code, isDay = 1) {
         if (code === 0) return ['Despejado', isDay ? 'sun' : 'moon'];
@@ -505,6 +521,7 @@
       holdScreenAwake();
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') {
+          syncRestMode();
           holdScreenAwake();
           loadWeather();
           loadNews();
