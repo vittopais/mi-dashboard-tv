@@ -214,6 +214,9 @@
       .news-source { margin-top: 1px; font-size: 7px; }
       footer { font-size: 7px; }
     }
+    @media (min-width: 1600px) and (min-height: 900px) and (max-aspect-ratio: 2/1) {
+      .screen { grid-template-rows: auto minmax(300px,.82fr) minmax(0,1.12fr) auto; }
+    }
     @media (max-width: 900px) {
       body { overflow: auto; }
       .screen { width: 100%; height: auto; min-height: 100vh; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
