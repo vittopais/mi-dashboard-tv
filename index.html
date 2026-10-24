@@ -145,8 +145,6 @@
     footer a { color: inherit; text-underline-offset: 3px; }
     .status { position: fixed; z-index: 20; left: 50%; bottom: 22px; transform: translate(-50%,20px); opacity: 0; pointer-events: none; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface); padding: 11px 16px; color: var(--paper); transition: .2s; font-size: 13px; box-shadow: 0 12px 34px rgba(0,0,0,.35); }
     .status.show { opacity: 1; transform: translate(-50%,0); }
-    body::after { content: ""; position: fixed; z-index: 30; inset: 0; pointer-events: none; background: rgba(0,0,0,.08); transition: background 1.2s ease; }
-    body.rest-mode::after { background: rgba(0,0,0,.90); }
     .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 10; align-items: center; justify-content: center; padding: 20px; background: rgba(20,20,21,.82); backdrop-filter: blur(8px); }
     .modal-backdrop.open { display: flex; }
     .modal { width: min(520px,100%); max-height: 92vh; overflow: auto; padding: 25px; border: 1px solid var(--line-strong); border-radius: 20px; background: var(--surface); box-shadow: 0 24px 70px rgba(0,0,0,.5); }
@@ -239,9 +237,119 @@
       .news-items { grid-template-columns: 1fr; }
       .news-item { min-height: 48px; }
     }
+
+    /* Fondo de casa y paneles refinados, manteniendo la interfaz y su información. */
+    :root {
+      --glass: rgba(27, 29, 31, .78);
+      --glass-strong: rgba(24, 26, 28, .88);
+      --glass-line: rgba(241, 240, 236, .16);
+      --glass-shadow: 0 18px 55px rgba(0, 0, 0, .24);
+    }
+    body { background: #161719; }
+    body::after { content: ''; position: fixed; z-index: 15; inset: 0; pointer-events: none; background: transparent; transition: background 1.7s ease; }
+    body.rest-mode::after { background: rgba(0,0,0,.55); }
+    .home-scene { position: fixed; z-index: 0; inset: 0; overflow: hidden; background: #161719; }
+    .scene-image, .scene-shade { position: absolute; inset: 0; }
+    .scene-image { background-position: center center; background-size: cover; transform: scale(1.015); transition: opacity 1.7s ease, filter 1.7s ease; }
+    .scene-day { background-image: url('./assets/vitto-casa-dia.jpg'); opacity: 1; }
+    .scene-night { background-image: url('./assets/vitto-casa-noche.jpg'); opacity: 0; filter: brightness(.65) saturate(.68); }
+    .scene-shade {
+      background: linear-gradient(90deg, rgba(12,14,15,.77) 0%, rgba(14,16,17,.59) 35%, rgba(16,18,19,.48) 68%, rgba(13,15,16,.38) 100%),
+                  linear-gradient(0deg, rgba(10,11,12,.58) 0%, transparent 38%, rgba(10,11,12,.23) 100%);
+      transition: background 1.7s ease;
+    }
+    body.rest-mode .scene-day { opacity: 0; }
+    body.rest-mode .scene-night { opacity: 1; }
+    body.rest-mode .scene-shade {
+      background: linear-gradient(90deg, rgba(7,9,12,.70) 0%, rgba(8,10,13,.52) 36%, rgba(8,10,13,.44) 70%, rgba(7,9,12,.38) 100%),
+                  linear-gradient(0deg, rgba(5,6,8,.56) 0%, rgba(7,8,10,.08) 48%, rgba(5,6,8,.30) 100%);
+    }
+    .screen {
+      position: relative; z-index: 1; width: min(100vw, 2300px); height: 100vh; height: 100dvh; min-height: 620px;
+      padding: clamp(18px, 2vw, 38px) clamp(22px, 2.6vw, 54px) clamp(14px, 1.55vw, 30px);
+      grid-template-columns: minmax(340px, .86fr) minmax(0, 1.14fr);
+      grid-template-rows: auto minmax(0, .82fr) minmax(0, 1.18fr) auto;
+      gap: clamp(11px, 1.2vw, 23px);
+    }
+    header { min-height: 48px; }
+    .brand { gap: 13px; }
+    .brand-mark { width: 43px; height: 43px; border-radius: 15px; background: rgba(57,59,63,.86); border-color: var(--glass-line); box-shadow: 0 6px 24px rgba(0,0,0,.16); }
+    .brand-title { font-size: 14px; letter-spacing: .21em; }
+    .brand-caption { font-size: 11px; }
+    .card, .news-board { border: 1px solid var(--glass-line); border-radius: clamp(20px, 1.7vw, 30px); background: var(--glass); backdrop-filter: blur(18px) saturate(112%); -webkit-backdrop-filter: blur(18px) saturate(112%); box-shadow: var(--glass-shadow); transition: background 1.2s ease, border-color 1.2s ease; }
+    .clock-card { grid-column: 1; grid-row: 2; padding: clamp(22px, 2.5vw, 48px); background: var(--glass-strong); }
+    .clock { margin: 10px 0 8px; font-size: clamp(78px, 8.2vw, 146px); letter-spacing: -.065em; line-height: 1; }
+    .date { font-size: clamp(18px, 1.6vw, 27px); }
+    .greeting { margin-top: 15px; font-size: clamp(12px, .92vw, 15px); }
+    .eyebrow { color: #b6c2c2; }
+    .weather-card { grid-column: 1; grid-row: 3; padding: clamp(18px, 1.9vw, 34px); background: var(--glass-strong); }
+    .weather-top { gap: 9px; }
+    .city-name { max-width: 100%; font-size: clamp(13px, 1.05vw, 18px); }
+    .city-change { font-size: 11px; }
+    .weather-now { gap: clamp(12px, 1.4vw, 24px); }
+    .weather-icon { width: clamp(52px, 5vw, 78px); height: clamp(52px, 5vw, 78px); }
+    .temperature { font-size: clamp(56px, 5vw, 88px); }
+    .weather-desc { font-size: clamp(12px, .95vw, 16px); }
+    .weather-meta { gap: 6px 14px; font-size: clamp(10px, .68vw, 12px); }
+    .forecast { gap: 8px; padding: 12px 0 3px; }
+    .forecast-day { font-size: clamp(10px, .72vw, 13px); }
+    .forecast-symbol { width: clamp(24px, 2vw, 34px); height: clamp(24px, 2vw, 34px); margin: 5px auto; }
+    .forecast-temps { font-size: clamp(10px, .7vw, 13px); }
+    .news-board { grid-column: 2; grid-row: 2 / 4; min-width: 0; padding: clamp(15px, 1.8vw, 31px) clamp(18px, 2vw, 36px); grid-template-rows: auto repeat(6, minmax(0, 1fr)); background: rgba(25,27,29,.76); }
+    .news-heading { min-height: 38px; font-size: clamp(12px, .88vw, 15px); }
+    .news-heading span:last-child { font-size: clamp(9px, .66vw, 12px); }
+    .news-row { grid-template-columns: clamp(145px, 16vw, 220px) minmax(0,1fr); gap: clamp(10px, 1.1vw, 18px); padding: 7px 0; border-color: rgba(241,240,236,.12); }
+    .news-category { padding-left: 15px; border-left-width: 2px; }
+    .category-name { font-size: clamp(10px, .82vw, 14px); }
+    .category-note { font-size: clamp(8px, .56vw, 10px); }
+    .news-item { padding: 6px 12px; border-radius: 11px; }
+    .news-item:hover { background: rgba(241,240,236,.07); }
+    .news-title { font-size: clamp(12px, .92vw, 17px); line-height: 1.34; -webkit-line-clamp: 2; }
+    .news-source { margin-top: 5px; font-size: clamp(9px, .62vw, 11px); }
+    footer { color: rgba(241,240,236,.72); text-shadow: 0 1px 8px rgba(0,0,0,.5); }
+    body.rest-mode .card, body.rest-mode .news-board { background: rgba(12,14,17,.94); border-color: rgba(166,168,171,.12); }
+    body.rest-mode .clock, body.rest-mode .date, body.rest-mode .temperature, body.rest-mode .news-title { color: rgba(241,240,236,.76); }
+    @media (min-width: 901px) and (max-height: 820px) {
+      .screen { padding-top: 12px; padding-bottom: 10px; gap: 10px; grid-template-rows: auto minmax(0,.82fr) minmax(0,1.18fr) auto; }
+      header { min-height: 39px; }
+      .brand-mark { width: 36px; height: 36px; }
+      .clock-card, .weather-card { padding: 16px 22px; }
+      .clock { font-size: clamp(62px,7.2vw,108px); }
+      .temperature { font-size: clamp(48px,4.4vw,68px); }
+      .weather-icon { width: 48px; height: 48px; }
+      .forecast { padding-top: 8px; }
+      .forecast-symbol { width: 23px; height: 23px; margin: 3px auto; }
+      .news-board { padding-top: 12px; padding-bottom: 12px; }
+      .news-row { padding: 4px 0; }
+    }
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+      .screen { width: 100%; height: auto; min-height: 100vh; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+      header { min-height: 42px; }
+      .hero { display: flex; flex-direction: column; gap: 12px; }
+      .clock-card, .weather-card { min-height: 220px; }
+      .news-board { min-height: 450px; display: grid; grid-template-rows: auto repeat(6, minmax(65px, auto)); }
+      .news-row { grid-template-columns: 115px minmax(0,1fr); min-height: 72px; }
+      .news-items { grid-template-columns: minmax(0,1fr); }
+      footer { flex-wrap: wrap; }
+    }
+    @media (max-width: 580px) {
+      .screen { padding: 12px; }
+      .clock-card { min-height: 190px; }
+      .weather-card { min-height: 255px; }
+      .news-board { min-height: 0; padding: 8px 12px; grid-template-rows: auto repeat(6, minmax(76px, auto)); }
+      .news-row { display: block; min-height: 82px; padding: 7px 0; }
+      .news-category { min-height: 26px; margin-bottom: 3px; }
+      .news-items { grid-template-columns: 1fr; }
+      .news-item { min-height: 48px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
+  <div class="home-scene" aria-hidden="true"><div class="scene-image scene-day"></div><div class="scene-image scene-night"></div><div class="scene-shade"></div></div>
   <div class="screen">
     <header>
       <div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m4.5 10 7.5-6 7.5 6v9.5h-15V10Z" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/><path d="M9.5 19.5v-6h5v6" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/></svg></div><div><h1 class="brand-title">Vitto Hogar</h1><div class="brand-caption">Tu día, de un vistazo</div></div></div>
@@ -470,7 +578,7 @@
           setUpdatedTime();
         } catch (_) {
           const message = location.protocol === 'file:' ? 'Las noticias se activan al publicar el sitio en Internet.' : 'No se pudieron cargar. Se reintenta automáticamente.';
-          NEWS_CATEGORIES.forEach(category => { $('news-' + category.id).innerHTML = `<div class="news-loading">${message}</div>`; });
+          NEWS_CATEGORIES.forEach(category => { $('news-' + category.id).innerHTML = '<div class="news-loading">' + message + '</div>'; });
         } finally {
           newsLoading = false;
         }
