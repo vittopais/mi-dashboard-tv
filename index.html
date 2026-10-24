@@ -145,7 +145,7 @@
     footer a { color: inherit; text-underline-offset: 3px; }
     .status { position: fixed; z-index: 20; left: 50%; bottom: 22px; transform: translate(-50%,20px); opacity: 0; pointer-events: none; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface); padding: 11px 16px; color: var(--paper); transition: .2s; font-size: 13px; box-shadow: 0 12px 34px rgba(0,0,0,.35); }
     .status.show { opacity: 1; transform: translate(-50%,0); }
-    body::after { content: ""; position: fixed; z-index: 30; inset: 0; pointer-events: none; background: rgba(0,0,0,0); transition: background 1.2s ease; }
+    body::after { content: ""; position: fixed; z-index: 30; inset: 0; pointer-events: none; background: rgba(0,0,0,.08); transition: background 1.2s ease; }
     body.rest-mode::after { background: rgba(0,0,0,.90); }
     .modal-backdrop { display: none; position: fixed; inset: 0; z-index: 10; align-items: center; justify-content: center; padding: 20px; background: rgba(20,20,21,.82); backdrop-filter: blur(8px); }
     .modal-backdrop.open { display: flex; }
