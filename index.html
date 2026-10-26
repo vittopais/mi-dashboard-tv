@@ -278,8 +278,8 @@
       --glass-shadow: 0 18px 55px rgba(0, 0, 0, .24);
     }
     body { background: #161719; }
-    body::after { content: ''; position: fixed; z-index: 15; inset: 0; pointer-events: none; background: transparent; transition: background 3.2s ease-in-out; }
-    body.rest-mode::after { background: rgba(0,0,0,.68); }
+    body::after { content: ''; position: fixed; z-index: 9999; inset: 0; pointer-events: none; background: transparent; transition: background 3.2s ease-in-out; }
+    body.rest-mode::after { background: #000; pointer-events: auto; }
     .home-scene { position: fixed; z-index: 0; inset: 0; overflow: hidden; background: #161719; }
     .scene-image, .scene-shade { position: absolute; inset: 0; }
     .scene-image { background-position: center center; background-size: cover; transform: scale(1.015); transition: opacity 3.2s ease-in-out, filter 3.2s ease-in-out; }
