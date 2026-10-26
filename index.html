@@ -62,8 +62,10 @@
     .brand-mark {
       width: 40px; height: 40px; display: grid; place-items: center; border-radius: 14px;
       color: var(--accent); background: var(--surface);
-      border: 1px solid var(--line-strong);
+      border: 1px solid var(--line-strong); padding: 0; cursor: pointer;
+      transition: background .2s ease, border-color .2s ease, transform .2s ease;
     }
+    .brand-mark:hover { background: var(--slate); border-color: var(--ash); transform: translateY(-1px); }
     .brand-mark svg { width: 19px; height: 19px; display: block; }
     .brand-title { margin: 0; font-size: 13px; font-weight: 720; letter-spacing: .17em; text-transform: uppercase; }
     .brand-caption { margin-top: 3px; color: var(--muted); font-size: 11px; letter-spacing: .045em; }
@@ -457,7 +459,7 @@
   <div class="home-scene" aria-hidden="true"><div class="scene-image scene-day"></div><div class="scene-image scene-night"></div><div class="scene-shade"></div></div>
   <div class="screen">
     <header>
-      <div class="brand"><div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="m4.5 10 7.5-6 7.5 6v9.5h-15V10Z" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/><path d="M9.5 19.5v-6h5v6" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/></svg></div><div><h1 class="brand-title">Vitto Hogar</h1><div class="brand-caption">Tu día, de un vistazo</div></div></div>
+      <div class="brand"><button class="brand-mark" id="fullscreenButton" type="button" aria-label="Poner la página en pantalla completa" title="Pantalla completa"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m4.5 10 7.5-6 7.5 6v9.5h-15V10Z" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/><path d="M9.5 19.5v-6h5v6" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/></svg></button><div><h1 class="brand-title">Vitto Hogar</h1><div class="brand-caption">Tu día, de un vistazo</div></div></div>
     </header>
 
     <section class="hero" aria-label="Hora, clima y pronóstico local">
@@ -549,6 +551,28 @@
         const el = $('status'); el.textContent = message; el.classList.add('show');
         clearTimeout(statusTimer); statusTimer = setTimeout(() => el.classList.remove('show'), 2600);
       }
+      const fullscreenButton = $('fullscreenButton');
+      function fullscreenIsActive() { return Boolean(document.fullscreenElement || document.webkitFullscreenElement); }
+      function updateFullscreenLabel() {
+        const label = fullscreenIsActive() ? 'Salir de pantalla completa' : 'Poner la página en pantalla completa';
+        fullscreenButton.setAttribute('aria-label', label);
+        fullscreenButton.title = label;
+      }
+      fullscreenButton.addEventListener('click', async () => {
+        try {
+          if (fullscreenIsActive()) {
+            const exit = document.exitFullscreen || document.webkitExitFullscreen;
+            if (exit) await exit.call(document);
+          } else {
+            const enter = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen;
+            if (!enter) { notice('Este navegador no permite pantalla completa.'); return; }
+            await enter.call(document.documentElement);
+          }
+          updateFullscreenLabel();
+        } catch (_) { notice('No se pudo cambiar a pantalla completa.'); }
+      });
+      document.addEventListener('fullscreenchange', updateFullscreenLabel);
+      document.addEventListener('webkitfullscreenchange', updateFullscreenLabel);
       function escapeHtml(value) {
         return String(value || '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
       }
