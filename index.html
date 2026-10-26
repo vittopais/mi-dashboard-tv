@@ -278,11 +278,11 @@
       --glass-shadow: 0 18px 55px rgba(0, 0, 0, .24);
     }
     body { background: #161719; }
-    body::after { content: ''; position: fixed; z-index: 9999; inset: 0; pointer-events: none; background: transparent; transition: background 3.2s ease-in-out; }
-    body.rest-mode::after { background: #000; pointer-events: auto; }
+    body::after { content: ''; position: fixed; z-index: 15; inset: 0; pointer-events: none; background: #000; opacity: 0; transition: opacity 12s ease-in-out; }
+    body.rest-mode::after { opacity: .86; }
     .home-scene { position: fixed; z-index: 0; inset: 0; overflow: hidden; background: #161719; }
     .scene-image, .scene-shade { position: absolute; inset: 0; }
-    .scene-image { background-position: center center; background-size: cover; transform: scale(1.015); transition: opacity 3.2s ease-in-out, filter 3.2s ease-in-out; }
+    .scene-image { background-position: center center; background-size: cover; transform: scale(1.015); transition: opacity 12s ease-in-out, filter 12s ease-in-out; }
     .scene-day { background-image: url('./assets/vitto-casa-dia.jpg'); opacity: 1; }
     .scene-night { background-image: url('./assets/vitto-casa-noche.jpg'); opacity: 0; filter: brightness(.55) saturate(.60); }
     .scene-shade {
@@ -296,7 +296,7 @@
       content: ""; position: absolute; inset: 0; opacity: 0;
       background: linear-gradient(90deg, rgba(7,9,12,.56) 0%, rgba(8,10,13,.42) 36%, rgba(8,10,13,.34) 70%, rgba(7,9,12,.28) 100%),
                   linear-gradient(0deg, rgba(5,6,8,.48) 0%, rgba(7,8,10,.06) 48%, rgba(5,6,8,.26) 100%);
-      transition: opacity 3.2s ease-in-out;
+      transition: opacity 12s ease-in-out;
     }
     body.rest-mode .scene-shade::after { opacity: 1; }
     .screen {
@@ -311,7 +311,7 @@
     .brand-mark { width: 43px; height: 43px; border-radius: 15px; background: rgba(57,59,63,.86); border-color: var(--glass-line); box-shadow: 0 6px 24px rgba(0,0,0,.16); }
     .brand-title { font-size: 14px; letter-spacing: .21em; }
     .brand-caption { font-size: 11px; }
-    .card, .news-board { border: 1px solid var(--glass-line); border-radius: clamp(20px, 1.7vw, 30px); background: var(--glass); backdrop-filter: blur(18px) saturate(112%); -webkit-backdrop-filter: blur(18px) saturate(112%); box-shadow: var(--glass-shadow); transition: background 1.2s ease, border-color 1.2s ease; }
+    .card, .news-board { border: 1px solid var(--glass-line); border-radius: clamp(20px, 1.7vw, 30px); background: var(--glass); backdrop-filter: blur(18px) saturate(112%); -webkit-backdrop-filter: blur(18px) saturate(112%); box-shadow: var(--glass-shadow); transition: background 12s ease-in-out, border-color 12s ease-in-out; }
     .clock-card { grid-column: 1; grid-row: 2; padding: clamp(22px, 2.5vw, 48px); background: var(--glass-strong); }
     .clock { margin: 10px 0 8px; font-size: clamp(78px, 8.2vw, 146px); letter-spacing: -.065em; line-height: 1; }
     .date { font-size: clamp(18px, 1.6vw, 27px); }
@@ -342,6 +342,7 @@
     .news-source { margin-top: 5px; font-size: clamp(9px, .62vw, 11px); }
     footer { color: rgba(241,240,236,.72); text-shadow: 0 1px 8px rgba(0,0,0,.5); }
     body.rest-mode .card, body.rest-mode .news-board { background: rgba(8,10,12,.97); border-color: rgba(166,168,171,.10); }
+    .clock, .date, .temperature, .news-title { transition: color 12s ease-in-out; }
     body.rest-mode .clock, body.rest-mode .date, body.rest-mode .temperature, body.rest-mode .news-title { color: rgba(241,240,236,.68); }
     @media (min-width: 901px) and (max-height: 820px) {
       .screen { padding-top: 12px; padding-bottom: 10px; gap: 10px; grid-template-rows: auto minmax(0,.82fr) minmax(0,1.18fr) auto; }
@@ -523,7 +524,7 @@
       const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
       const WEATHER_REFRESH_MS = 5 * 60 * 1000;
       const NEWS_POLL_MS = 5 * 60 * 1000;
-      const REST_START_MINUTES = 23 * 60;
+      const REST_START_MINUTES = 23 * 60 + 30;
       const REST_END_MINUTES = 6 * 60 + 30;
       const NEWS_URL = './news.json';
       const NEWS_CATEGORIES = [
